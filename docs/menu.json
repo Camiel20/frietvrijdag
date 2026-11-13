@@ -1,0 +1,1421 @@
+{
+ "bron": "https://deposthoorn.ultimatumapp.com/",
+ "categorieen": [
+  {
+   "naam": "Week Actie",
+   "producten": [
+    {
+     "id": "617100",
+     "naam": "Snack van de week: BelCrunch (Gepaneerde Mexicano)",
+     "cents": 225
+    },
+    {
+     "id": "644419",
+     "naam": "XXL Viandel",
+     "cents": 335
+    },
+    {
+     "id": "646289",
+     "naam": "XXL Viandel speciaal",
+     "cents": 480
+    },
+    {
+     "id": "738569",
+     "naam": "XXL Schnitzel Menu",
+     "cents": 1550
+    }
+   ]
+  },
+  {
+   "naam": "Frietjes",
+   "producten": [
+    {
+     "id": "566324",
+     "naam": "Friet zonder",
+     "cents": 250
+    },
+    {
+     "id": "566335",
+     "naam": "Friet mayonaise",
+     "cents": 300
+    },
+    {
+     "id": "566336",
+     "naam": "Friet ketchup",
+     "cents": 300
+    },
+    {
+     "id": "566337",
+     "naam": "Friet curry",
+     "cents": 300
+    },
+    {
+     "id": "566338",
+     "naam": "Friet speciaal",
+     "cents": 340
+    },
+    {
+     "id": "566339",
+     "naam": "Friet satésaus",
+     "cents": 355
+    },
+    {
+     "id": "566340",
+     "naam": "Friet oorlog",
+     "cents": 395
+    },
+    {
+     "id": "566341",
+     "naam": "Friet stoofvlees",
+     "cents": 425
+    },
+    {
+     "id": "566342",
+     "naam": "Friet joppiesaus",
+     "cents": 335
+    },
+    {
+     "id": "566343",
+     "naam": "Friet babi pangang",
+     "cents": 595
+    },
+    {
+     "id": "566344",
+     "naam": "Friet curry en mayonaise",
+     "cents": 335
+    },
+    {
+     "id": "566345",
+     "naam": "Gezinszak friet 2 personen",
+     "cents": 450
+    },
+    {
+     "id": "566346",
+     "naam": "Gezinszak friet 3 personen",
+     "cents": 675
+    },
+    {
+     "id": "566347",
+     "naam": "Gezinszak friet 4 personen",
+     "cents": 900
+    },
+    {
+     "id": "566348",
+     "naam": "Gezinszak friet 5 personen",
+     "cents": 1125
+    },
+    {
+     "id": "566349",
+     "naam": "Gezinszak friet 6 personen",
+     "cents": 1350
+    }
+   ]
+  },
+  {
+   "naam": "Waterfiets",
+   "producten": [
+    {
+     "id": "731649",
+     "naam": "Waterfiets Mayo",
+     "cents": 695
+    },
+    {
+     "id": "731651",
+     "naam": "Waterfiets Speciaal",
+     "cents": 725
+    },
+    {
+     "id": "731653",
+     "naam": "Waterfiets Sate",
+     "cents": 725
+    },
+    {
+     "id": "731655",
+     "naam": "Waterfiets Oorlog",
+     "cents": 745
+    },
+    {
+     "id": "731656",
+     "naam": "Waterfiets Stoofvlees",
+     "cents": 795
+    },
+    {
+     "id": "731657",
+     "naam": "Waterfiets Joppie",
+     "cents": 725
+    },
+    {
+     "id": "731658",
+     "naam": "Waterfiets Pangang",
+     "cents": 945
+    }
+   ]
+  },
+  {
+   "naam": "Supertjes met frikandel",
+   "producten": [
+    {
+     "id": "566350",
+     "naam": "Supertje zonder",
+     "cents": 450
+    },
+    {
+     "id": "566351",
+     "naam": "Supertje mayonaise",
+     "cents": 500
+    },
+    {
+     "id": "566352",
+     "naam": "Supertje ketchup",
+     "cents": 500
+    },
+    {
+     "id": "566353",
+     "naam": "Supertje curry",
+     "cents": 500
+    },
+    {
+     "id": "566354",
+     "naam": "Supertje curry en mayonaise",
+     "cents": 520
+    },
+    {
+     "id": "566355",
+     "naam": "Supertje speciaal",
+     "cents": 530
+    },
+    {
+     "id": "566356",
+     "naam": "Supertje joppiesaus",
+     "cents": 530
+    },
+    {
+     "id": "566357",
+     "naam": "Supertje satésaus",
+     "cents": 530
+    },
+    {
+     "id": "566358",
+     "naam": "Supertje oorlog",
+     "cents": 550
+    },
+    {
+     "id": "566359",
+     "naam": "Supertje stoofvlees",
+     "cents": 600
+    },
+    {
+     "id": "683412",
+     "naam": "Waterfiets speciaal",
+     "cents": 725
+    },
+    {
+     "id": "683413",
+     "naam": "Waterfiets Oorlog",
+     "cents": 745
+    },
+    {
+     "id": "683414",
+     "naam": "Waterfiets Mayo",
+     "cents": 695
+    }
+   ]
+  },
+  {
+   "naam": "Loaded Fries",
+   "producten": [
+    {
+     "id": "732401",
+     "naam": "Loaded Fries Crispy Chicken",
+     "cents": 995
+    },
+    {
+     "id": "732402",
+     "naam": "Loaded Fries Sate'tje",
+     "cents": 995
+    },
+    {
+     "id": "732403",
+     "naam": "Loaded Fries Pulled Pork",
+     "cents": 995
+    },
+    {
+     "id": "732404",
+     "naam": "Loaded Fries Biefstuk",
+     "cents": 995
+    },
+    {
+     "id": "732405",
+     "naam": "Loaded Fries Truffel V",
+     "cents": 695
+    },
+    {
+     "id": "735602",
+     "naam": "Loaded Fries Boerenschnitzel",
+     "cents": 1095
+    }
+   ]
+  },
+  {
+   "naam": "Snacks",
+   "producten": [
+    {
+     "id": "566360",
+     "naam": "Frikandel",
+     "cents": 230
+    },
+    {
+     "id": "566361",
+     "naam": "Frikandel mayonaise",
+     "cents": 265
+    },
+    {
+     "id": "566362",
+     "naam": "Frikandel curry",
+     "cents": 265
+    },
+    {
+     "id": "566363",
+     "naam": "Frikandel speciaal",
+     "cents": 300
+    },
+    {
+     "id": "566372",
+     "naam": "Frikandel satésaus",
+     "cents": 300
+    },
+    {
+     "id": "566373",
+     "naam": "Vleeskroket",
+     "cents": 230
+    },
+    {
+     "id": "566374",
+     "naam": "Goulashkroket",
+     "cents": 270
+    },
+    {
+     "id": "566375",
+     "naam": "Bourgondische kroket",
+     "cents": 270
+    },
+    {
+     "id": "566376",
+     "naam": "Satékroket",
+     "cents": 270
+    },
+    {
+     "id": "566377",
+     "naam": "Bitterballen 6 stuks",
+     "cents": 295
+    },
+    {
+     "id": "566378",
+     "naam": "Kipcorn",
+     "cents": 250
+    },
+    {
+     "id": "566379",
+     "naam": "Kipfingers 6 stuks",
+     "cents": 300
+    },
+    {
+     "id": "566380",
+     "naam": "Kipnuggets 6 stuks",
+     "cents": 300
+    },
+    {
+     "id": "566381",
+     "naam": "Bamiblok",
+     "cents": 250
+    },
+    {
+     "id": "566382",
+     "naam": "Bamischijf oriëntal",
+     "cents": 275
+    },
+    {
+     "id": "566383",
+     "naam": "Nasischijf",
+     "cents": 250
+    },
+    {
+     "id": "566384",
+     "naam": "Gehaktstaaf",
+     "cents": 275
+    },
+    {
+     "id": "566385",
+     "naam": "Gehaktbal uit eigen keuken",
+     "cents": 375
+    },
+    {
+     "id": "566386",
+     "naam": "Hamburger",
+     "cents": 300
+    },
+    {
+     "id": "566387",
+     "naam": "Kaassoufflé",
+     "cents": 250
+    },
+    {
+     "id": "566388",
+     "naam": "Mini kaassoufflé 5 stuks",
+     "cents": 275
+    },
+    {
+     "id": "566389",
+     "naam": "Ham-kaassoufflé",
+     "cents": 250
+    },
+    {
+     "id": "566390",
+     "naam": "Knakworst",
+     "cents": 260
+    },
+    {
+     "id": "566391",
+     "naam": "Lihanboutje",
+     "cents": 260
+    },
+    {
+     "id": "566392",
+     "naam": "Mexicano",
+     "cents": 300
+    },
+    {
+     "id": "566393",
+     "naam": "Braadworst",
+     "cents": 275
+    },
+    {
+     "id": "566394",
+     "naam": "Loempia",
+     "cents": 385
+    },
+    {
+     "id": "566395",
+     "naam": "Loempia speciaal",
+     "cents": 590
+    },
+    {
+     "id": "566396",
+     "naam": "Loempia Posthoorn",
+     "cents": 575
+    },
+    {
+     "id": "566397",
+     "naam": "Sitostick",
+     "cents": 300
+    },
+    {
+     "id": "566398",
+     "naam": "Berenklauw",
+     "cents": 310
+    },
+    {
+     "id": "566400",
+     "naam": "Viandel",
+     "cents": 260
+    },
+    {
+     "id": "566401",
+     "naam": "Smulrol",
+     "cents": 275
+    },
+    {
+     "id": "566402",
+     "naam": "Frikandel XXL 250 gram",
+     "cents": 400
+    },
+    {
+     "id": "566403",
+     "naam": "Frikandel XXL 250 gram speciaal",
+     "cents": 480
+    },
+    {
+     "id": "566404",
+     "naam": "Schnitzel",
+     "cents": 800
+    },
+    {
+     "id": "566406",
+     "naam": "Shoarmarol",
+     "cents": 275
+    },
+    {
+     "id": "566411",
+     "naam": "Ragouzi",
+     "cents": 250
+    },
+    {
+     "id": "566412",
+     "naam": "Satérol",
+     "cents": 275
+    },
+    {
+     "id": "726696",
+     "naam": "Mozzarellasoufflé",
+     "cents": 250
+    },
+    {
+     "id": "570214",
+     "naam": "Loempidel",
+     "cents": 290
+    },
+    {
+     "id": "570213",
+     "naam": "mozzarella soufflé",
+     "cents": 250
+    },
+    {
+     "id": "578103",
+     "naam": "Groente kroket",
+     "cents": 260
+    },
+    {
+     "id": "578104",
+     "naam": "Hete donder",
+     "cents": 300
+    },
+    {
+     "id": "644420",
+     "naam": "XXL Viandel",
+     "cents": 335
+    },
+    {
+     "id": "644421",
+     "naam": "XXL Viandel speciaal",
+     "cents": 460
+    },
+    {
+     "id": "683415",
+     "naam": "Shoarmarol Royaal",
+     "cents": 450
+    },
+    {
+     "id": "731662",
+     "naam": "Biefstuk met champignon en ui",
+     "cents": 1200
+    },
+    {
+     "id": "688765",
+     "naam": "Portie Spareribs",
+     "cents": 1200
+    },
+    {
+     "id": "566405",
+     "naam": "Portie saté",
+     "cents": 900
+    },
+    {
+     "id": "694111",
+     "naam": "Viandel speciaal",
+     "cents": 385
+    },
+    {
+     "id": "706440",
+     "naam": "Crizly",
+     "cents": 310
+    }
+   ]
+  },
+  {
+   "naam": "Mini Snacks",
+   "producten": [
+    {
+     "id": "736940",
+     "naam": "Mozzerella bites 6 stuks",
+     "cents": 425
+    },
+    {
+     "id": "731628",
+     "naam": "Kaastengels 6st",
+     "cents": 375
+    },
+    {
+     "id": "731629",
+     "naam": "Kaassoufle'tjes 5st.",
+     "cents": 275
+    },
+    {
+     "id": "731630",
+     "naam": "Bitterballen 6st.",
+     "cents": 295
+    },
+    {
+     "id": "731631",
+     "naam": "Vlammetjes 6st.",
+     "cents": 300
+    },
+    {
+     "id": "731632",
+     "naam": "Kipnuggets 6st.",
+     "cents": 300
+    },
+    {
+     "id": "731633",
+     "naam": "KipFingers 6st.",
+     "cents": 300
+    },
+    {
+     "id": "731637",
+     "naam": "Mini Loempia's 6st.",
+     "cents": 425
+    },
+    {
+     "id": "731638",
+     "naam": "Uienringen 6st.",
+     "cents": 425
+    },
+    {
+     "id": "731634",
+     "naam": "Borrelmaatjes 6st.",
+     "cents": 425
+    },
+    {
+     "id": "731640",
+     "naam": "Bitterhapjes 6st.",
+     "cents": 325
+    },
+    {
+     "id": "731635",
+     "naam": "Bitterhapjes 24st.",
+     "cents": 1400
+    },
+    {
+     "id": "731636",
+     "naam": "Bitterhapjes 36st.",
+     "cents": 2100
+    },
+    {
+     "id": "731663",
+     "naam": "Bitterhapje 1 st.",
+     "cents": 60
+    },
+    {
+     "id": "736941",
+     "naam": "Mozzerella bites 6 stuks",
+     "cents": 425
+    }
+   ]
+  },
+  {
+   "naam": "Nieuw In Het Assortiment",
+   "producten": [
+    {
+     "id": "708281",
+     "naam": "Mini Loempia's 6stuks",
+     "cents": 425
+    },
+    {
+     "id": "708282",
+     "naam": "Crizly",
+     "cents": 310
+    },
+    {
+     "id": "708301",
+     "naam": "KaasKroket",
+     "cents": 260
+    },
+    {
+     "id": "708302",
+     "naam": "KaasKroket Blokje",
+     "cents": 260
+    },
+    {
+     "id": "722601",
+     "naam": "Portie Gebakken Aardappeltjes met spek & Ui",
+     "cents": 400
+    },
+    {
+     "id": "724972",
+     "naam": "Dynamite",
+     "cents": 290
+    },
+    {
+     "id": "732170",
+     "naam": "AspergeKroket",
+     "cents": 260
+    },
+    {
+     "id": "732382",
+     "naam": "Duo KaasTengels",
+     "cents": 425
+    },
+    {
+     "id": "736942",
+     "naam": "Mozzerella bites 6 stuks",
+     "cents": 425
+    },
+    {
+     "id": "736943",
+     "naam": "Shuffle - rood fruit & zoute drop",
+     "cents": 450
+    },
+    {
+     "id": "736944",
+     "naam": "Shuffle - Witte chocola & gezouten karamel",
+     "cents": 450
+    },
+    {
+     "id": "738462",
+     "naam": "Kip Gyoza (6stuks)",
+     "cents": 425
+    },
+    {
+     "id": "738752",
+     "naam": "CroquetBurger",
+     "cents": 475
+    }
+   ]
+  },
+  {
+   "naam": "Tussendoortjes",
+   "producten": [
+    {
+     "id": "566318",
+     "naam": "Rundvleessalade klein",
+     "cents": 350
+    },
+    {
+     "id": "566319",
+     "naam": "Rundvleessalade groot",
+     "cents": 450
+    },
+    {
+     "id": "677490",
+     "naam": "Tonijnsalade",
+     "cents": 1345
+    },
+    {
+     "id": "566321",
+     "naam": "Bittergarnituur klein",
+     "cents": 350
+    },
+    {
+     "id": "566322",
+     "naam": "Bittergarnituur middel",
+     "cents": 1400
+    },
+    {
+     "id": "566323",
+     "naam": "Bittergarnituur groot",
+     "cents": 2100
+    },
+    {
+     "id": "677489",
+     "naam": "Carpacciosalade",
+     "cents": 1445
+    }
+   ]
+  },
+  {
+   "naam": "Complete menu's",
+   "producten": [
+    {
+     "id": "566426",
+     "naam": "Schnitzel menu XXL (250gr)",
+     "cents": 1750
+    },
+    {
+     "id": "566427",
+     "naam": "Varkenshaasmenu",
+     "cents": 1950
+    },
+    {
+     "id": "566428",
+     "naam": "Spareribs menu",
+     "cents": 2150
+    },
+    {
+     "id": "566429",
+     "naam": "Biefstuk menu kogelbiefstuk",
+     "cents": 2150
+    },
+    {
+     "id": "566430",
+     "naam": "Saté menu varkenshaas",
+     "cents": 1850
+    },
+    {
+     "id": "566431",
+     "naam": "Mixed Grill Spies",
+     "cents": 1850
+    },
+    {
+     "id": "566432",
+     "naam": "Kindermenu box",
+     "cents": 695,
+     "statiegeld": 15
+    },
+    {
+     "id": "566725",
+     "naam": "Zalmfilet menu",
+     "cents": 2195
+    }
+   ]
+  },
+  {
+   "naam": "Hamburgers",
+   "producten": [
+    {
+     "id": "566433",
+     "naam": "Blazing Luke",
+     "cents": 825
+    },
+    {
+     "id": "566434",
+     "naam": "Tucker Joe",
+     "cents": 825
+    },
+    {
+     "id": "566435",
+     "naam": "Black Jack",
+     "cents": 825
+    },
+    {
+     "id": "566436",
+     "naam": "Wild Bill",
+     "cents": 825
+    },
+    {
+     "id": "703525",
+     "naam": "Posthoorn DELUXE",
+     "cents": 1495
+    },
+    {
+     "id": "703526",
+     "naam": "Posthoorn DELUXE Menu",
+     "cents": 2195
+    },
+    {
+     "id": "703527",
+     "naam": "TruffelBurger (Truffelmayo)",
+     "cents": 895
+    },
+    {
+     "id": "703528",
+     "naam": "Creamy Bacon Burger",
+     "cents": 895
+    },
+    {
+     "id": "705789",
+     "naam": "Boeren Burger",
+     "cents": 895
+    },
+    {
+     "id": "720883",
+     "naam": "Egg-Bacon Burger",
+     "cents": 895
+    }
+   ]
+  },
+  {
+   "naam": "Special Burgers",
+   "producten": [
+    {
+     "id": "731617",
+     "naam": "Brie-BaconBurger",
+     "cents": 895
+    },
+    {
+     "id": "731618",
+     "naam": "BoerenBurger",
+     "cents": 895
+    },
+    {
+     "id": "731619",
+     "naam": "Creamy-Bacon Burger",
+     "cents": 895
+    },
+    {
+     "id": "731620",
+     "naam": "TruffelBurger",
+     "cents": 895
+    },
+    {
+     "id": "731621",
+     "naam": "VlamBurger",
+     "cents": 895
+    },
+    {
+     "id": "731622",
+     "naam": "Egg-Bacon Burger",
+     "cents": 895
+    },
+    {
+     "id": "731623",
+     "naam": "Posthoorn DE-LUXE",
+     "cents": 1495
+    }
+   ]
+  },
+  {
+   "naam": "Salade's",
+   "producten": [
+    {
+     "id": "679968",
+     "naam": "Carpaccio salade",
+     "cents": 1450
+    },
+    {
+     "id": "679970",
+     "naam": "Zalmsalade",
+     "cents": 1450
+    },
+    {
+     "id": "679969",
+     "naam": "Tonijnsalade",
+     "cents": 1450
+    },
+    {
+     "id": "731641",
+     "naam": "Vegetarische Brie Salade",
+     "cents": 1450
+    },
+    {
+     "id": "732407",
+     "naam": "Kip Salade",
+     "cents": 1450
+    }
+   ]
+  },
+  {
+   "naam": "Glutenvrije snacks",
+   "producten": [
+    {
+     "id": "631264",
+     "naam": "Frikandel Glutenvrij",
+     "cents": 275
+    },
+    {
+     "id": "631265",
+     "naam": "Bamischijf Glutenvrij",
+     "cents": 275
+    },
+    {
+     "id": "631266",
+     "naam": "Kroket Glutenvrij",
+     "cents": 275
+    },
+    {
+     "id": "644425",
+     "naam": "Knakworst",
+     "cents": 260
+    }
+   ]
+  },
+  {
+   "naam": "Broodjes",
+   "producten": [
+    {
+     "id": "566413",
+     "naam": "Broodje kroket",
+     "cents": 300
+    },
+    {
+     "id": "566414",
+     "naam": "Broodje frikandel",
+     "cents": 300
+    },
+    {
+     "id": "566415",
+     "naam": "Broodje hamburger",
+     "cents": 400
+    },
+    {
+     "id": "566416",
+     "naam": "Broodje hamburger speciaal",
+     "cents": 475
+    },
+    {
+     "id": "566417",
+     "naam": "Broodje hamburger satésaus",
+     "cents": 460
+    },
+    {
+     "id": "566418",
+     "naam": "Broodje cheeseburger",
+     "cents": 475
+    },
+    {
+     "id": "731661",
+     "naam": "Broodje KipBurger",
+     "cents": 475
+    },
+    {
+     "id": "566419",
+     "naam": "Broodje kaas",
+     "cents": 275
+    },
+    {
+     "id": "566420",
+     "naam": "Broodje ham",
+     "cents": 275
+    },
+    {
+     "id": "566424",
+     "naam": "Broodje knakworst",
+     "cents": 335
+    },
+    {
+     "id": "624388",
+     "naam": "Broodje Bal",
+     "cents": 650
+    },
+    {
+     "id": "669328",
+     "naam": "Los Broodje",
+     "cents": 110
+    }
+   ]
+  },
+  {
+   "naam": "Vers belegde broodjes",
+   "producten": [
+    {
+     "id": "566421",
+     "naam": "Broodje eiersalade",
+     "cents": 600
+    },
+    {
+     "id": "566422",
+     "naam": "Broodje Tonijnsalade",
+     "cents": 650
+    },
+    {
+     "id": "624386",
+     "naam": "Broodje Zalm",
+     "cents": 725
+    },
+    {
+     "id": "624387",
+     "naam": "Broodje Carpaccio",
+     "cents": 725
+    },
+    {
+     "id": "626313",
+     "naam": "Broodje pittige kip salade",
+     "cents": 600
+    },
+    {
+     "id": "626317",
+     "naam": "Broodje Posthoorn",
+     "cents": 650
+    },
+    {
+     "id": "644423",
+     "naam": "Broodje Pulled Pork",
+     "cents": 725
+    },
+    {
+     "id": "709530",
+     "naam": "Broodje Los",
+     "cents": 110
+    },
+    {
+     "id": "731660",
+     "naam": "Broodje Gezond",
+     "cents": 600
+    },
+    {
+     "id": "732399",
+     "naam": "Broodje Bal",
+     "cents": 650
+    },
+    {
+     "id": "732400",
+     "naam": "Broodje Brie",
+     "cents": 695
+    }
+   ]
+  },
+  {
+   "naam": "Sauzen",
+   "producten": [
+    {
+     "id": "726694",
+     "naam": "Mayonaise",
+     "cents": 130
+    },
+    {
+     "id": "566457",
+     "naam": "Curry",
+     "cents": 130
+    },
+    {
+     "id": "566458",
+     "naam": "Ketchup",
+     "cents": 130
+    },
+    {
+     "id": "726692",
+     "naam": "Extra uien",
+     "cents": 125
+    },
+    {
+     "id": "726695",
+     "naam": "Mosterd",
+     "cents": 125
+    },
+    {
+     "id": "566459",
+     "naam": "Chilisaus",
+     "cents": 130
+    },
+    {
+     "id": "726697",
+     "naam": "Speciaal",
+     "cents": 125
+    },
+    {
+     "id": "566460",
+     "naam": "Joppiesaus",
+     "cents": 180
+    },
+    {
+     "id": "566468",
+     "naam": "Stoofvlees saus",
+     "cents": 230
+    },
+    {
+     "id": "566464",
+     "naam": "Satésaus",
+     "cents": 195
+    },
+    {
+     "id": "726693",
+     "naam": "Knoflooksaus",
+     "cents": 150
+    },
+    {
+     "id": "566453",
+     "naam": "Fritessaus",
+     "cents": 130
+    },
+    {
+     "id": "720885",
+     "naam": "Champignonsaus Klein",
+     "cents": 240
+    },
+    {
+     "id": "720886",
+     "naam": "Champignonsaus Middel",
+     "cents": 330
+    },
+    {
+     "id": "720887",
+     "naam": "ChampignonSaus Groot",
+     "cents": 440
+    },
+    {
+     "id": "720888",
+     "naam": "Peperroomsaus Klein",
+     "cents": 240
+    },
+    {
+     "id": "720889",
+     "naam": "Peperroomsaus Middel",
+     "cents": 330
+    },
+    {
+     "id": "720890",
+     "naam": "Peperroomsaus Groot",
+     "cents": 440
+    }
+   ]
+  },
+  {
+   "naam": "Ijsjes",
+   "producten": [
+    {
+     "id": "691371",
+     "naam": "Ijskoffie Cool Cappuccino",
+     "cents": 550
+    },
+    {
+     "id": "691373",
+     "naam": "Shuffle Kinder Bueno - KitKat",
+     "cents": 450
+    },
+    {
+     "id": "691374",
+     "naam": "Shuffle Kinder Bueno - Lion",
+     "cents": 450
+    },
+    {
+     "id": "691375",
+     "naam": "Shuffle Kinder Bueno - Daim",
+     "cents": 450
+    },
+    {
+     "id": "691376",
+     "naam": "Shuffle chocola - Oreo",
+     "cents": 450
+    },
+    {
+     "id": "691377",
+     "naam": "Shuffle chocola - KitKat",
+     "cents": 450
+    },
+    {
+     "id": "691378",
+     "naam": "Shuffle chocola - Lion",
+     "cents": 450
+    },
+    {
+     "id": "691381",
+     "naam": "Shuffle caramel - KitKat",
+     "cents": 450
+    },
+    {
+     "id": "691379",
+     "naam": "Shuffle caramel - Lotus Speculoos",
+     "cents": 450
+    },
+    {
+     "id": "691382",
+     "naam": "Shuffle caramel - Daim",
+     "cents": 450
+    },
+    {
+     "id": "691383",
+     "naam": "Verassingsijsje",
+     "cents": 450
+    },
+    {
+     "id": "691384",
+     "naam": "Magnum Almond Stick 110ml",
+     "cents": 250
+    },
+    {
+     "id": "691385",
+     "naam": "Magnum White Stick 110ml",
+     "cents": 250
+    },
+    {
+     "id": "691386",
+     "naam": "Magnum Classic Stick 110ml",
+     "cents": 250
+    },
+    {
+     "id": "691387",
+     "naam": "Calippo Cola 105ml",
+     "cents": 175
+    },
+    {
+     "id": "691388",
+     "naam": "Raket 55ml",
+     "cents": 100
+    },
+    {
+     "id": "691389",
+     "naam": "Shuffle chocola - M&M's",
+     "cents": 450
+    },
+    {
+     "id": "691390",
+     "naam": "Shuffle caramel - M&M's",
+     "cents": 450
+    },
+    {
+     "id": "691380",
+     "naam": "Shuffle Caramel-lion",
+     "cents": 450
+    },
+    {
+     "id": "735442",
+     "naam": "Shuffle Red Fruit-Drop",
+     "cents": 450
+    },
+    {
+     "id": "735443",
+     "naam": "Shuffle Gezouten Caramel-Witte Chocola",
+     "cents": 450
+    },
+    {
+     "id": "735444",
+     "naam": "Shuffle Brownie-White Chcocolate-Crispy",
+     "cents": 450
+    }
+   ]
+  },
+  {
+   "naam": "Dranken",
+   "producten": [
+    {
+     "id": "566437",
+     "naam": "Coca-Cola",
+     "cents": 235,
+     "statiegeld": 15
+    },
+    {
+     "id": "566438",
+     "naam": "Coca-Cola zero",
+     "cents": 235,
+     "statiegeld": 15
+    },
+    {
+     "id": "566439",
+     "naam": "Dr pepper",
+     "cents": 235,
+     "statiegeld": 15
+    },
+    {
+     "id": "566440",
+     "naam": "Lipton Ice Tea",
+     "cents": 260,
+     "statiegeld": 15
+    },
+    {
+     "id": "566441",
+     "naam": "Fanta Orange 330ml",
+     "cents": 235,
+     "statiegeld": 15
+    },
+    {
+     "id": "566442",
+     "naam": "Sprite lemon-lime",
+     "cents": 235,
+     "statiegeld": 15
+    },
+    {
+     "id": "566443",
+     "naam": "Fanta Cassis 330ml",
+     "cents": 260,
+     "statiegeld": 15
+    },
+    {
+     "id": "566444",
+     "naam": "Chaudfontaine",
+     "cents": 260,
+     "statiegeld": 15
+    },
+    {
+     "id": "566445",
+     "naam": "Red Bull Energy Drink",
+     "cents": 285,
+     "statiegeld": 15
+    },
+    {
+     "id": "566446",
+     "naam": "Chocomel",
+     "cents": 260,
+     "statiegeld": 15
+    },
+    {
+     "id": "566447",
+     "naam": "Fristi",
+     "cents": 260,
+     "statiegeld": 15
+    },
+    {
+     "id": "566448",
+     "naam": "Hertog Jan",
+     "cents": 275,
+     "statiegeld": 15
+    },
+    {
+     "id": "566449",
+     "naam": "AA Drink",
+     "cents": 260,
+     "statiegeld": 15
+    },
+    {
+     "id": "731648",
+     "naam": "Fuse Tea Mango",
+     "cents": 260,
+     "statiegeld": 15
+    },
+    {
+     "id": "566450",
+     "naam": "Milkshake klein",
+     "cents": 275
+    },
+    {
+     "id": "566451",
+     "naam": "Milkshake middel",
+     "cents": 325
+    },
+    {
+     "id": "566452",
+     "naam": "Milkshake groot",
+     "cents": 375
+    },
+    {
+     "id": "692451",
+     "naam": "Fles Droge witte wijn",
+     "cents": 1500
+    },
+    {
+     "id": "692452",
+     "naam": "Fles Zoete Witte Wijn",
+     "cents": 1500
+    }
+   ]
+  },
+  {
+   "naam": "Soepen",
+   "producten": [
+    {
+     "id": "731624",
+     "naam": "Groente Soep",
+     "cents": 650
+    },
+    {
+     "id": "731625",
+     "naam": "Tomaten Creme Soep",
+     "cents": 650
+    },
+    {
+     "id": "731626",
+     "naam": "Mosterdsoep",
+     "cents": 650
+    },
+    {
+     "id": "731627",
+     "naam": "Champignon Soep",
+     "cents": 650
+    }
+   ]
+  },
+  {
+   "naam": "Smoothies",
+   "producten": [
+    {
+     "id": "731642",
+     "naam": "Aardbei-Banaan",
+     "cents": 575
+    },
+    {
+     "id": "731643",
+     "naam": "Blue Berry",
+     "cents": 575
+    },
+    {
+     "id": "731644",
+     "naam": "Mango-Aardbei",
+     "cents": 575
+    },
+    {
+     "id": "731645",
+     "naam": "Ananas-Mango",
+     "cents": 575
+    },
+    {
+     "id": "731646",
+     "naam": "Framboos-Mango",
+     "cents": 575
+    },
+    {
+     "id": "731647",
+     "naam": "Aarbei-Mango",
+     "cents": 575
+    }
+   ]
+  }
+ ],
+ "bijgewerkt": "2026-11-13T16:28:01+00:00"
+}

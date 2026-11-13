@@ -1,0 +1,10 @@
+{
+  "name": "frietvrijdag",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "dev": "py -m http.server 5056 --directory docs",
+    "menu": "py tools/haal_menu.py"
+  }
+}
