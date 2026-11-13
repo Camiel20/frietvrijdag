@@ -212,10 +212,10 @@ export async function laadMenu() {
   return r.json();
 }
 
-/** Link die een collega krijgt. De token staat achter # zodat hij niet in serverlogs komt. */
-export function bestelLink(token, datum) {
+/** Link die een collega krijgt. De token staat achter # zodat hij niet in serverlogs komt. taal 'en' = Engelse pagina. */
+export function bestelLink(token, datum, taal) {
   const basis = location.href.replace(/[#?].*$/, '').replace(/[^/]*$/, '');
-  return `${basis}#t=${token}${datum ? '&d=' + datum : ''}`;
+  return `${basis}#t=${token}${datum ? '&d=' + datum : ''}${taal === 'en' ? '&l=en' : ''}`;
 }
 
 export function el(tag, attrs = {}, ...kids) {

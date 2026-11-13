@@ -1,6 +1,8 @@
 // Rad van fortuin op een canvas. Iedereen tekent dezelfde volgorde (op naam gesorteerd),
 // zodat het rad bij elke collega op dezelfde naam stopt.
 
+import { t } from './taal.js';
+
 const KLEUREN = ['#f4b400', '#e8710a', '#d93025', '#c2185b', '#8e24aa', '#3949ab', '#1e88e5', '#00897b', '#43a047', '#7cb342'];
 const TWEE_PI = Math.PI * 2;
 
@@ -11,7 +13,7 @@ export function maakRad(namen) {
   canvas.width = canvas.height = px * dpr;
   canvas.className = 'rad-canvas';
   canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', 'Rad met: ' + namen.join(', '));
+  canvas.setAttribute('aria-label', t('Rad met: ', 'Wheel with: ') + namen.join(', '));
   const ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
   let hoek = 0;
@@ -24,7 +26,7 @@ export function maakRad(namen) {
     if (!namen.length) {
       ctx.fillStyle = '#e6ebe3'; ctx.beginPath(); ctx.arc(c, c, r, 0, TWEE_PI); ctx.fill();
       ctx.fillStyle = '#738075'; ctx.font = '600 15px system-ui, sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('Nog niemand besteld', c, c + 5);
+      ctx.fillText(t('Nog niemand besteld', 'No orders yet'), c, c + 5);
       return;
     }
     namen.forEach((naam, i) => {

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#256d46">
+<title>FrietVrijdag · how does it work?</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍟</text></svg>">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Zelfde opmaak als uitleg.html (Nederlandse versie). */
+  .uitleg{max-width:640px;margin:auto}
+  .uitleg h1{font-size:28px}
+  .uitleg .intro{font-size:16px;color:#405048;margin:0 0 22px}
+  .stap{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+  .stap .nr{width:44px;height:44px;border-radius:50%;background:#fff4d6;display:grid;place-items:center;font-size:22px}
+  .stap h2{margin:8px 0 6px}
+  .stap p,.stap li{font-size:15px;color:#33402f;margin:0 0 8px}
+  .stap ul{padding-left:18px;margin:0 0 8px}
+  .tip{background:#eef6ef;border-radius:10px;padding:10px 12px;font-size:14px;color:#1f5a35;margin-top:8px}
+  .let{background:#fff7e8;color:#7a5413}
+  .knopje{display:inline-block;background:#256d46;color:#fff;border-radius:7px;padding:1px 7px;font-weight:700;font-size:13px;white-space:nowrap}
+  .knopje.licht{background:#edf3ec;color:#2c5b3c}
+  .vraag{margin:0 0 14px}
+  .vraag strong{display:block;font-size:15px;margin-bottom:3px}
+  .vraag span{font-size:14px;color:#4b584c}
+  .terug{margin-bottom:18px}
+</style>
+</head>
+<body>
+<header><span class="logo">🍟 FrietVrijdag</span><a href="uitleg.html" class="button secondary taalknop link" lang="nl">Nederlands</a></header>
+<main class="uitleg">
+  <button class="secondary terug" id="terug" hidden>← Back to ordering</button>
+  <p class="eyebrow">HOW DOES IT WORK?</p>
+  <h1>Ordering fries on Friday</h1>
+  <p class="intro">Everyone picks their own fries using their own link. A wheel decides who pays the whole bill. Everyone else pays that person back through a payment link.</p>
+
+  <section class="panel stap">
+    <div class="nr">🔗</div>
+    <div>
+      <h2>1. Your own link</h2>
+      <p>You get one personal link. With it, the app knows it's you; no need to log in anywhere.</p>
+      <p><strong>Don't share your link.</strong> Whoever has your link orders as you.</p>
+      <p>The app opens in English when you use your English link. You can switch language any time with the <span class="knopje licht">NL</span> / <span class="knopje licht">EN</span> button at the top right.</p>
+      <div class="tip">📱 <strong>Tip:</strong> add it to your home screen.<br>
+        iPhone (Safari): share button <b>⬆︎</b> → <b>Add to Home Screen</b>.<br>
+        Android (Chrome): menu <b>⋮</b> → <b>Add to Home screen</b>.</div>
+    </div>
+  </section>
+
+  <section class="panel stap">
+    <div class="nr">🍟</div>
+    <div>
+      <h2>2. Open the order</h2>
+      <p>Fancy fries? Tap <span class="knopje">Open the order</span>. There is only one order per Friday: if it's already open, you simply join in.</p>
+      <p>On any other day than Friday, you open the one for the coming Friday in advance.</p>
+    </div>
+  </section>
+
+  <section class="panel stap">
+    <div class="nr">🛒</div>
+    <div>
+      <h2>3. Choose what you want</h2>
+      <ul>
+        <li>Search or tap a category, then tap <span class="knopje">+</span> next to what you want.</li>
+        <li>Special requests (mayo on the side, no onion…) go in the note field on that line.</li>
+        <li>Everything is saved automatically. You can change it until the wheel has been spun.</li>
+      </ul>
+      <p>The menu is in Dutch, just like on the De Posthoorn website. Prices come from their website; bottle/can deposit (<i>statiegeld</i>) is included.</p>
+      <div class="tip">📖 A few menu words: <b>friet</b> = fries · <b>met</b> = with · <b>zonder</b> = without (<b>friet zonder</b> = plain fries) · <b>ui</b> = onion · <b>friet speciaal</b> = with mayo, curry ketchup and onion · <b>friet oorlog</b> = with mayo, peanut sauce and onion · <b>kroket</b> = croquette · <b>frikandel</b> = Dutch minced-meat sausage · <b>broodje</b> = bread roll / sandwich · <b>sauzen</b> = sauces · <b>dranken</b> = drinks · <b>ijsjes</b> = ice cream</div>
+    </div>
+  </section>
+
+  <section class="panel stap">
+    <div class="nr">🎡</div>
+    <div>
+      <h2>4. The wheel: who pays?</h2>
+      <p>Everyone who ordered something is on the wheel. Is everyone ready? Then someone who ordered taps <span class="knopje">Spin the wheel</span>.</p>
+      <ul>
+        <li>From that moment the order is <strong>closed</strong>: nobody can change anything.</li>
+        <li>The wheel is spun only once. Everyone sees it spin, even if you open the page later.</li>
+      </ul>
+      <div class="tip let">So only spin once everyone has ordered!</div>
+    </div>
+  </section>
+
+  <section class="panel stap">
+    <div class="nr">💳</div>
+    <div>
+      <h2>5. Are you paying?</h2>
+      <ul>
+        <li>You see the complete <strong>order list</strong>; with <span class="knopje licht">Copy</span> you can paste it straight into the order at De Posthoorn.</li>
+        <li>Create a <strong>Tikkie</strong> (or another payment request) <strong>without a fixed amount</strong> and paste the link into the app → <span class="knopje">Save</span>. Everyone sees in the app exactly how much they owe you.</li>
+        <li>Under <strong>Who has paid?</strong> you see who says they've paid. Is the money in your account? Then tap <span class="knopje licht">Received</span>.</li>
+        <li>Not everyone paid yet? <span class="knopje licht">Copy reminder</span> gives you a message for the group chat.</li>
+        <li>Optional: take a photo of the receipt under <strong>Read and check the receipt</strong>. The app then tells you where the receipt differs from what was ordered.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="panel stap">
+    <div class="nr">✅</div>
+    <div>
+      <h2>6. Paying back</h2>
+      <p>At the top it says <strong>"You pay … €&nbsp;…"</strong>. Tap <span class="knopje">Pay via … link</span>, pay that amount and then tap <span class="knopje licht">I have paid</span> in the app.</p>
+      <p>Once it's in, the payer ticks it off. If something from an earlier Friday is still open, you'll see it at the top of your page.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Questions</h2>
+    <p class="vraag"><strong>I see "Link doesn't work".</strong><span>Your link has been replaced or switched off. Ask Camiel for a new one.</span></p>
+    <p class="vraag"><strong>I want to change something, but the wheel has already been spun.</strong><span>Just tell the payer; they can adjust it when placing the order.</span></p>
+    <p class="vraag"><strong>Can I order on another phone or computer?</strong><span>Yes, just open your own link there too. It works everywhere.</span></p>
+    <p class="vraag"><strong>Is this from De Posthoorn?</strong><span>No, it's our own order list. The payer still places the actual order with De Posthoorn.</span></p>
+  </section>
+</main>
+<footer>FrietVrijdag · our own order list for colleagues</footer>
+<script>
+  // Back button only if you came here from the app.
+  if (history.length > 1) {
+    const k = document.getElementById('terug');
+    k.hidden = false;
+    k.onclick = () => history.back();
+  }
+</script>
+</body>
+</html>

@@ -31,32 +31,35 @@ function bewerkFoto(bitmap) {
 }
 
 /**
- * @param {{tekst: string, opslaan: (tekst: string, totaal: number|null) => Promise<void>}} opties
+ * @param {{tekst: string, opslaan: (tekst: string, totaal: number|null) => Promise<void>, en?: boolean}} opties
+ *   en: Engelse teksten (bestelpagina in het Engels); beheer laat hem weg.
  * @returns {HTMLElement}
  */
-export function bonPaneel({ tekst: begin = '', opslaan }) {
-  const status = el('p', { class: 'muted bonstatus' }, 'Recht van boven, goed licht, hele bon in beeld. De foto blijft op dit apparaat.');
+export function bonPaneel({ tekst: begin = '', opslaan, en = false }) {
+  const t = (nl, eng) => (en ? eng : nl);
+  const status = el('p', { class: 'muted bonstatus' }, t('Recht van boven, goed licht, hele bon in beeld. De foto blijft op dit apparaat.',
+    'Straight from above, good light, whole receipt in view. The photo stays on this device.'));
   const voortgang = el('progress', { max: 1, value: 0, hidden: true });
-  const tekst = el('textarea', { rows: 12, spellcheck: 'false', class: 'mono', 'aria-label': 'Tekst van de bon' });
+  const tekst = el('textarea', { rows: 12, spellcheck: 'false', class: 'mono', 'aria-label': t('Tekst van de bon', 'Receipt text') });
   tekst.value = begin;
-  const totaalVeld = el('input', { inputmode: 'decimal', placeholder: 'uit de tekst' });
+  const totaalVeld = el('input', { inputmode: 'decimal', placeholder: t('uit de tekst', 'from the text') });
   const voorbeeld = el('div', { class: 'bonvoorbeeld' });
 
   const ververs = () => {
     const { regels, totaal } = leesBon(tekst.value);
     voorbeeld.replaceChildren(
       ...(regels.length ? regels.map((r) => el('div', { class: 'line' },
-        el('div', {}, el('strong', {}, `${r.aantal} × ${r.naam}`), el('small', {}, 'per stuk ' + euro(r.cents))),
-        el('strong', {}, euro(r.regelCents)))) : [el('p', { class: 'muted' }, 'Nog geen productregels herkend.')]),
-      el('div', { class: 'sum' }, el('span', {}, 'Som regels'), el('strong', {}, euro(regels.reduce((s, r) => s + r.regelCents, 0)))),
-      el('div', { class: 'sum' }, el('span', {}, 'Totaal op bon'), el('strong', {}, totaal != null ? euro(totaal) : 'niet gevonden')));
+        el('div', {}, el('strong', {}, `${r.aantal} × ${r.naam}`), el('small', {}, t('per stuk ', 'each ') + euro(r.cents))),
+        el('strong', {}, euro(r.regelCents)))) : [el('p', { class: 'muted' }, t('Nog geen productregels herkend.', 'No product lines recognised yet.'))]),
+      el('div', { class: 'sum' }, el('span', {}, t('Som regels', 'Sum of lines')), el('strong', {}, euro(regels.reduce((s, r) => s + r.regelCents, 0)))),
+      el('div', { class: 'sum' }, el('span', {}, t('Totaal op bon', 'Receipt total')), el('strong', {}, totaal != null ? euro(totaal) : t('niet gevonden', 'not found'))));
   };
   tekst.addEventListener('input', ververs);
 
   const foto = el('input', { type: 'file', accept: 'image/*', capture: 'environment', onchange: async (e) => {
     const bestand = e.target.files[0];
     if (!bestand) return;
-    voortgang.hidden = false; voortgang.value = 0; status.textContent = 'Foto laden…';
+    voortgang.hidden = false; voortgang.value = 0; status.textContent = t('Foto laden…', 'Loading photo…');
     let worker;
     try {
       // createImageBitmap zet een telefoonfoto meteen rechtop (EXIF-draaiing).
@@ -65,42 +68,43 @@ export function bonPaneel({ tekst: begin = '', opslaan }) {
       bitmap.close();
       const T = await laadTesseract();
       worker = await T.createWorker('nld', 1, { logger: (m) => {
-        if (m.status === 'recognizing text') { voortgang.value = m.progress; status.textContent = `Lezen… ${Math.round(m.progress * 100)}%`; }
+        if (m.status === 'recognizing text') { voortgang.value = m.progress; status.textContent = `${t('Lezen…', 'Reading…')} ${Math.round(m.progress * 100)}%`; }
         else status.textContent = m.status + '…';
       } });
       const { data } = await worker.recognize(canvas);
       tekst.value = data.text.trim();
-      status.textContent = 'Klaar. Kijk de tekst na en sla op.';
+      status.textContent = t('Klaar. Kijk de tekst na en sla op.', 'Done. Check the text and save.');
       ververs();
     } catch (x) {
       console.error(x);
-      status.textContent = `Uitlezen mislukt (${x.message || x}). Typ de bon dan over.`;
+      status.textContent = t(`Uitlezen mislukt (${x.message || x}). Typ de bon dan over.`, `Reading failed (${x.message || x}). Please type the receipt instead.`);
     } finally {
       voortgang.hidden = true;
       worker?.terminate();
     }
   } });
 
-  const knop = el('button', {}, 'Bon opslaan en vergelijken');
+  const knopTekst = t('Bon opslaan en vergelijken', 'Save and compare receipt');
+  const knop = el('button', {}, knopTekst);
   const formulier = el('form', { onsubmit: async (e) => {
     e.preventDefault();
     let bonTotaal = leesBon(tekst.value).totaal;
     if (totaalVeld.value.trim()) {
-      try { bonTotaal = parseEuro(totaalVeld.value); } catch { return alert('Ongeldig totaalbedrag.'); }
+      try { bonTotaal = parseEuro(totaalVeld.value); } catch { return alert(t('Ongeldig totaalbedrag.', 'Invalid total amount.')); }
     }
     knop.disabled = true;
-    try { await opslaan(tekst.value.slice(0, 20000), bonTotaal); knop.textContent = 'Opgeslagen ✓'; }
-    catch (x) { console.error(x); alert('Opslaan lukte niet: ' + (x.message || x)); }
-    finally { knop.disabled = false; setTimeout(() => (knop.textContent = 'Bon opslaan en vergelijken'), 1800); }
+    try { await opslaan(tekst.value.slice(0, 20000), bonTotaal); knop.textContent = t('Opgeslagen ✓', 'Saved ✓'); }
+    catch (x) { console.error(x); alert(t('Opslaan lukte niet: ', 'Saving failed: ') + (x.message || x)); }
+    finally { knop.disabled = false; setTimeout(() => (knop.textContent = knopTekst), 1800); }
   } },
   tekst,
-  el('label', {}, 'Totaal van de bon (€) ', el('span', { class: 'muted' }, '— leeg = uit de tekst'), totaalVeld),
+  el('label', {}, t('Totaal van de bon (€) ', 'Receipt total (€) '), el('span', { class: 'muted' }, t('— leeg = uit de tekst', '— empty = from the text')), totaalVeld),
   knop);
 
   ververs();
   return el('div', { class: 'bonpaneel' },
-    el('label', {}, '1. Foto van de kassabon', foto), status, voortgang,
-    el('p', { class: 'muted' }, '2. Verbeter wat verkeerd gelezen is. Een productregel eindigt met een bedrag (',
-      el('code', {}, '2 Friet mayonaise 6,00'), '); de totaalregel heet ', el('code', {}, 'Totaal'), ' of ', el('code', {}, 'Te betalen'), '.'),
-    el('div', { class: 'bon-kolommen' }, formulier, el('div', {}, el('h3', {}, 'Herkend'), voorbeeld)));
+    el('label', {}, t('1. Foto van de kassabon', '1. Photo of the receipt'), foto), status, voortgang,
+    el('p', { class: 'muted' }, t('2. Verbeter wat verkeerd gelezen is. Een productregel eindigt met een bedrag (', '2. Fix anything read wrongly. A product line ends with an amount ('),
+      el('code', {}, '2 Friet mayonaise 6,00'), t('); de totaalregel heet ', '); the total line is called '), el('code', {}, 'Totaal'), t(' of ', ' or '), el('code', {}, 'Te betalen'), '.'),
+    el('div', { class: 'bon-kolommen' }, formulier, el('div', {}, el('h3', {}, t('Herkend', 'Recognised')), voorbeeld)));
 }

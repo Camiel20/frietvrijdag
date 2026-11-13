@@ -17,7 +17,7 @@ export function vorigeVrijdagen(vrijdag, n) {
   return Array.from({ length: n }, (_, i) => isoDatum(new Date(j, m - 1, d - 7 * (i + 1))));
 }
 
-export function datumTekst(iso, jaar = false) {
-  return new Date(iso + 'T12:00:00').toLocaleDateString('nl-NL',
+export function datumTekst(iso, jaar = false, taal = 'nl') {
+  return new Date(iso + 'T12:00:00').toLocaleDateString(taal === 'en' ? 'en-GB' : 'nl-NL',
     { weekday: 'long', day: 'numeric', month: 'long', ...(jaar ? { year: 'numeric' } : {}) });
 }

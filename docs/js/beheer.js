@@ -194,10 +194,20 @@ async function bonScherm(datum) {
 
 // ================================================================ deelnemers
 
-/** Persoonlijk berichtje voor WhatsApp: eigen link + uitleg. */
-function welkomBericht(d) {
-  const uitleg = new URL('uitleg.html', location.href).href.split('#')[0];
-  return `Hoi ${d.naam.split(' ')[0]}! 🍟 Dit is jouw eigen FrietVrijdag-link:
+/** Persoonlijk berichtje voor WhatsApp: eigen link + uitleg. taal 'en' = Engelse link, uitleg en tekst. */
+function welkomBericht(d, taal = 'nl') {
+  const voornaam = d.naam.split(' ')[0];
+  const uitleg = new URL(taal === 'en' ? 'uitleg-en.html' : 'uitleg.html', location.href).href.split('#')[0];
+  if (taal === 'en') {
+    return `Hi ${voornaam}! 🍟 This is your own FrietVrijdag link:
+${bestelLink(d.token, null, 'en')}
+
+`
+      + `Use it to order your fries on Friday; a wheel decides who pays. Add it to your home screen and don't share it (whoever has the link orders as you).
+`
+      + `How it works: ${uitleg}`;
+  }
+  return `Hoi ${voornaam}! 🍟 Dit is jouw eigen FrietVrijdag-link:
 ${bestelLink(d.token)}
 
 `
@@ -232,6 +242,8 @@ async function deelnemersScherm() {
         el('div', { class: 'actions' },
           d.actief && d.token ? el('button', { class: 'secondary', onclick: (e) => kopieer(bestelLink(d.token), e.target) }, 'Kopieer') : null,
           d.actief && d.token ? el('button', { class: 'secondary', onclick: (e) => kopieer(welkomBericht(d), e.target) }, 'Kopieer bericht') : null,
+          d.actief && d.token ? el('button', { class: 'secondary', title: 'Hetzelfde bericht in het Engels, met een link die de app in het Engels opent',
+            onclick: (e) => kopieer(welkomBericht(d, 'en'), e.target) }, 'Bericht EN') : null,
           el('button', { class: 'secondary', onclick: async () => {
             const nieuw = prompt('Naam (voor- en achternaam):', d.naam)?.replace(/\s+/g, ' ').trim().slice(0, 80);
             if (!nieuw || nieuw === d.naam) return;

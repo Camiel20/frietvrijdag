@@ -78,3 +78,5 @@ button.groot,.button.groot{display:block;width:100%;padding:14px 16px;font-size:
 details>summary{cursor:pointer}details>summary .inline-h2{display:inline;margin:0}
 .bon-kolommen{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}.bon-kolommen h3{margin:0 0 6px}
 @media(max-width:700px){.bon-kolommen{grid-template-columns:1fr}}
+/* taalknop rechtsboven op de bestelpagina */
+header .opslagstatus{margin-left:auto}.taalknop{padding:6px 10px;font-size:12px;margin-left:10px}.taalknop.link{text-decoration:none}

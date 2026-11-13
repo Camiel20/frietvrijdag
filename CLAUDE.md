@@ -37,3 +37,6 @@ collega's (telefoon) is `docs/uitleg.html`.
 - Beheer heeft: rondes (rad terugzetten, sluiten/heropenen, **Ronde verwijderen**), regels
   corrigeren, bon uitlezen, deelnemers (toevoegen, **Naam**, **Kopieer bericht** = WhatsApp-tekst
   met eigen link + uitleg, Nieuwe link, Uitzetten).
+- Engels: bestelpagina via `&l=en` in de link of de knop NL/EN rechtsboven (onthouden per browser);
+  teksten staan als `t('nl', 'en')` naast elkaar (`docs/js/taal.js`). Uitleg: `uitleg-en.html`.
+  Beheer blijft Nederlands; knop **Bericht EN** geeft het welkomstbericht met Engelse link.

@@ -91,10 +91,12 @@ function lijkt(a, b) {
  * Meldingen bij verschillen tussen bestellingen en bon.
  * besteld: [{naam, aantal, cents}] (per regel; wordt hier per product opgeteld)
  */
-export function vergelijk(besteld, bonRegels, bonTotaal, besteldTotaal) {
+export function vergelijk(besteld, bonRegels, bonTotaal, besteldTotaal, taal = 'nl') {
+  const t = (nl, en) => (taal === 'en' ? en : nl);
   const meldingen = [];
   if (bonTotaal != null && bonTotaal !== besteldTotaal) {
-    meldingen.push({ soort: 'totaal', tekst: `Bon ${euro(bonTotaal)}, bestellingen ${euro(besteldTotaal)}: verschil ${euro(bonTotaal - besteldTotaal)}.` });
+    meldingen.push({ soort: 'totaal', tekst: t(`Bon ${euro(bonTotaal)}, bestellingen ${euro(besteldTotaal)}: verschil ${euro(bonTotaal - besteldTotaal)}.`,
+      `Receipt ${euro(bonTotaal)}, orders ${euro(besteldTotaal)}: difference ${euro(bonTotaal - besteldTotaal)}.`) });
   }
   if (!bonRegels.length) return meldingen;
 
@@ -116,17 +118,18 @@ export function vergelijk(besteld, bonRegels, bonTotaal, besteldTotaal) {
     let beste = null, score = 0;
     for (const ok of open) { const s = lijkt(bk, ok); if (s > score) { beste = ok; score = s; } }
     if (beste === null || score < 0.6) {
-      meldingen.push({ soort: 'bon', tekst: `Op de bon, niet besteld: ${b.aantal} × ${b.naam} (${euro(b.cents)}).` });
+      meldingen.push({ soort: 'bon', tekst: t(`Op de bon, niet besteld: ${b.aantal} × ${b.naam} (${euro(b.cents)}).`,
+        `On the receipt, not ordered: ${b.aantal} × ${b.naam} (${euro(b.cents)}).`) });
       continue;
     }
     open.delete(beste);
     const p = producten.get(beste);
-    if (p.aantal !== b.aantal) meldingen.push({ soort: 'aantal', tekst: `${p.naam}: besteld ${p.aantal}, op de bon ${b.aantal}.` });
-    if (p.cents !== b.cents) meldingen.push({ soort: 'prijs', tekst: `${p.naam}: menuprijs ${euro(p.cents)}, bonprijs ${euro(b.cents)}.` });
+    if (p.aantal !== b.aantal) meldingen.push({ soort: 'aantal', tekst: t(`${p.naam}: besteld ${p.aantal}, op de bon ${b.aantal}.`, `${p.naam}: ordered ${p.aantal}, on the receipt ${b.aantal}.`) });
+    if (p.cents !== b.cents) meldingen.push({ soort: 'prijs', tekst: t(`${p.naam}: menuprijs ${euro(p.cents)}, bonprijs ${euro(b.cents)}.`, `${p.naam}: menu price ${euro(p.cents)}, receipt price ${euro(b.cents)}.`) });
   }
   for (const ok of [...open].sort()) {
     const p = producten.get(ok);
-    meldingen.push({ soort: 'besteld', tekst: `Besteld, niet op de bon gevonden: ${p.aantal} × ${p.naam}.` });
+    meldingen.push({ soort: 'besteld', tekst: t(`Besteld, niet op de bon gevonden: ${p.aantal} × ${p.naam}.`, `Ordered, not found on the receipt: ${p.aantal} × ${p.naam}.`) });
   }
   return meldingen;
 }
