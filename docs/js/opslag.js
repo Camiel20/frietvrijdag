@@ -107,6 +107,7 @@ async function firestore() {
       await batch.commit();
     },
     zetActief(id, actief) { return fs.updateDoc(d('deelnemers', id), { actief }); },
+    hernoem(id, naam) { return fs.updateDoc(d('deelnemers', id), { naam }); },
     async nieuweLink(id) {
       const oud = await fs.getDocs(fs.query(fs.collection(db, 'tokens'), fs.where('deelnemer', '==', id)));
       const batch = fs.writeBatch(db);
@@ -193,6 +194,7 @@ function demo() {
       s.deelnemers[id] = { naam, actief: true }; s.tokens[maakToken()] = id; schrijf(s);
     },
     async zetActief(id, actief) { const s = st(); s.deelnemers[id].actief = actief; schrijf(s); },
+    async hernoem(id, naam) { const s = st(); s.deelnemers[id].naam = naam; schrijf(s); },
     async nieuweLink(id) {
       const s = st(); for (const [t, v] of Object.entries(s.tokens)) if (v === id) delete s.tokens[t];
       s.tokens[maakToken()] = id; schrijf(s);

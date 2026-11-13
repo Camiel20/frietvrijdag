@@ -233,6 +233,11 @@ async function deelnemersScherm() {
           d.actief && d.token ? el('button', { class: 'secondary', onclick: (e) => kopieer(bestelLink(d.token), e.target) }, 'Kopieer') : null,
           d.actief && d.token ? el('button', { class: 'secondary', onclick: (e) => kopieer(welkomBericht(d), e.target) }, 'Kopieer bericht') : null,
           el('button', { class: 'secondary', onclick: async () => {
+            const nieuw = prompt('Naam (voor- en achternaam):', d.naam)?.replace(/\s+/g, ' ').trim().slice(0, 80);
+            if (!nieuw || nieuw === d.naam) return;
+            try { await opslag.hernoem(d.id, nieuw); deelnemersScherm(); } catch (x) { fout(x); }
+          } }, 'Naam'),
+          el('button', { class: 'secondary', onclick: async () => {
             if (!confirm(`Nieuwe link voor ${d.naam}? De oude werkt dan niet meer.`)) return;
             try { await opslag.nieuweLink(d.id); deelnemersScherm(); } catch (x) { fout(x); }
           } }, 'Nieuwe link'),
