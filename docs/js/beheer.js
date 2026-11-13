@@ -86,6 +86,18 @@ function tekenRonde(ronde, bestellingen, namen) {
         opslag.wijzigRonde(datum, { betaler: null, gedraaidDoor: null, gedraaidOp: null, open: true }).catch(fout);
       } }, 'Rad terugzetten') : el('button', { class: ronde.open ? 'danger' : 'secondary', onclick: () => opslag.wijzigRonde(datum, { open: !ronde.open }).catch(fout) },
         ronde.open ? 'Sluiten zonder rad' : 'Weer openen'),
+      el('button', { class: 'danger', onclick: async (e) => {
+        const n = bestellingen.length;
+        if (!confirm(`Ronde van ${datumTekst(datum, true)} helemaal verwijderen?
+
+`
+          + `Dit haalt de ronde én ${n} bestelling${n === 1 ? '' : 'en'} weg (ook betaald/ontvangen). Dit kan niet ongedaan worden.
+
+`
+          + 'Daarna kan iemand voor deze vrijdag opnieuw een bestelling openen.')) return;
+        e.target.disabled = true;
+        try { await opslag.verwijderRonde(datum); location.hash = ''; } catch (err) { e.target.disabled = false; fout(err); }
+      } }, '🗑 Ronde verwijderen'),
       el('a', { class: 'button secondary', href: '#' }, '← Rondes')));
 
   const stats = el('div', { class: 'stats' },
@@ -182,6 +194,18 @@ async function bonScherm(datum) {
 
 // ================================================================ deelnemers
 
+/** Persoonlijk berichtje voor WhatsApp: eigen link + uitleg. */
+function welkomBericht(d) {
+  const uitleg = new URL('uitleg.html', location.href).href.split('#')[0];
+  return `Hoi ${d.naam.split(' ')[0]}! 🍟 Dit is jouw eigen FrietVrijdag-link:
+${bestelLink(d.token)}
+
+`
+    + `Hiermee bestel je op vrijdag je friet; het rad bepaalt wie betaalt. Zet hem op je beginscherm en deel hem niet (wie de link heeft, bestelt als jou).
+`
+    + `Zo werkt het: ${uitleg}`;
+}
+
 async function deelnemersScherm() {
   const lijst = await opslag.deelnemersMetLinks();
   const namen = el('textarea', { rows: 4, placeholder: 'Eén naam per regel' });
@@ -207,6 +231,7 @@ async function deelnemersScherm() {
             : el('small', {}, d.actief ? 'geen link: maak een nieuwe' : 'uitgezet: link werkt niet')),
         el('div', { class: 'actions' },
           d.actief && d.token ? el('button', { class: 'secondary', onclick: (e) => kopieer(bestelLink(d.token), e.target) }, 'Kopieer') : null,
+          d.actief && d.token ? el('button', { class: 'secondary', onclick: (e) => kopieer(welkomBericht(d), e.target) }, 'Kopieer bericht') : null,
           el('button', { class: 'secondary', onclick: async () => {
             if (!confirm(`Nieuwe link voor ${d.naam}? De oude werkt dan niet meer.`)) return;
             try { await opslag.nieuweLink(d.id); deelnemersScherm(); } catch (x) { fout(x); }

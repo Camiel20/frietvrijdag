@@ -215,7 +215,7 @@ function betalerBlokken() {
       el('div', { class: 'sum' }, el('span', {}, 'Totaal (menuprijzen)'), el('strong', {}, euro(totaal)))),
     el('section', { class: 'panel' },
       el('h2', {}, 'Jouw betaallink'),
-      el('p', { class: 'muted' }, 'Maak een Tikkie of betaalverzoek en plak de link hier. Iedereen ziet bij die link zijn eigen bedrag.'),
+      el('p', { class: 'muted' }, 'Maak een Tikkie (of ander betaalverzoek) zonder vast bedrag en plak de link hier. Ieder ziet hieronder in de app hoeveel hij jou moet betalen.'),
       el('form', { class: 'inline', onsubmit: async (e) => {
         e.preventDefault();
         const v = tikkieVeld.value.trim();

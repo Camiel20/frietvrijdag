@@ -85,6 +85,14 @@ async function firestore() {
       if (!(await fs.getDoc(ref)).exists()) await fs.setDoc(ref, nieuweRonde(datum, null));
     },
     wijzigRonde(datum, velden) { return fs.updateDoc(d('rondes', datum), velden); },
+    async verwijderRonde(datum) {
+      // Eerst de bestellingen: Firestore ruimt een subcollectie niet vanzelf op.
+      const best = await fs.getDocs(fs.collection(db, 'rondes', datum, 'bestellingen'));
+      const batch = fs.writeBatch(db);
+      best.docs.forEach((b) => batch.delete(b.ref));
+      batch.delete(d('rondes', datum));
+      await batch.commit();
+    },
     zetBestelling(datum, id, velden) { return fs.setDoc(d('rondes', datum, 'bestellingen', id), velden, { merge: true }); },
     async deelnemersMetLinks() {
       const [ps, ts] = await Promise.all([fs.getDocs(fs.collection(db, 'deelnemers')), fs.getDocs(fs.collection(db, 'tokens'))]);
@@ -174,6 +182,7 @@ function demo() {
     async rondes() { return Object.values(st().rondes).map((r) => ({ id: r.datum, ...r })).sort(opDatum); },
     async maakRonde(datum) { const s = st(); s.rondes[datum] ??= nieuweRonde(datum, null); schrijf(s); },
     async wijzigRonde(datum, velden) { const s = st(); Object.assign(s.rondes[datum], velden); schrijf(s); },
+    async verwijderRonde(datum) { const s = st(); delete s.rondes[datum]; delete s.bestellingen[datum]; schrijf(s); },
     async zetBestelling(datum, id, velden) { const s = st(); const b = best(s, datum); b[id] = { ...b[id], ...velden }; schrijf(s); },
     async deelnemersMetLinks() {
       const s = st(); const tok = new Map(Object.entries(s.tokens).map(([t, id]) => [id, t]));
