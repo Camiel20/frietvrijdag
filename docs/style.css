@@ -80,3 +80,5 @@ details>summary{cursor:pointer}details>summary .inline-h2{display:inline;margin:
 @media(max-width:700px){.bon-kolommen{grid-template-columns:1fr}}
 /* taalknop rechtsboven op de bestelpagina */
 header .opslagstatus{margin-left:auto}.taalknop{padding:6px 10px;font-size:12px;margin-left:10px}.taalknop.link{text-decoration:none}
+/* waarschuwing voor het draaien: daarna is de bestelling gesloten */
+.waarschuwing{background:#fff7e8;border:1px solid #f1d9a8;color:#7a5413;border-radius:12px;padding:14px;margin:14px auto 0;max-width:440px;text-align:left}.waarschuwing strong{display:block;font-size:16px}.waarschuwing p{margin:6px 0;font-size:14px}.waarschuwing small{color:#8a6a2c}

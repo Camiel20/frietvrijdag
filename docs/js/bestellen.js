@@ -27,7 +27,7 @@ const GEZIEN = 'frietvrijdag-rad-gezien-';
 let ik, menu, ronde = null, bestellingen = [], regels = [];
 const namen = new Map();
 let mandGeladen = false, rondeGeladen = false, bestellingenGeladen = false;
-let rad = null, radSleutel = '', radBezig = false;
+let rad = null, radSleutel = '', radBezig = false, draaiVragen = false;
 let bewaarTimer = null, bewaren = Promise.resolve();
 let tikkieVeld = null, bonEl = null, bonOpen = null, overzichtOpen = false;
 
@@ -124,7 +124,15 @@ function rondeSectie() {
       el('p', { class: 'muted' }, t('Iedereen die besteld heeft, staat op het rad. Is iedereen klaar? Eén draai beslist wie de rekening betaalt.',
         'Everyone who ordered is on the wheel. Is everyone ready? One spin decides who pays the bill.')),
       radBlok,
-      el('button', { class: 'groot', disabled: !ikBesteld || !k.length, onclick: draai }, t('🎡 Draai aan het rad', '🎡 Spin the wheel')),
+      // Eerst een waarschuwing in de pagina (geen confirm(): die toont niet elke in-app-browser, en hij is snel weggeklikt).
+      draaiVragen && ikBesteld && k.length ? el('div', { class: 'waarschuwing', role: 'alert' },
+        el('strong', {}, t('⚠️ Hierna is de bestelling gesloten', '⚠️ This closes the order')),
+        el('p', {}, t('Na het draaien kan niemand meer iets bestellen of wijzigen. Heeft iedereen besteld?',
+          'After spinning, nobody can order or change anything. Has everyone ordered?')),
+        el('p', {}, el('small', {}, t(`Op het rad (${k.length}): `, `On the wheel (${k.length}): `) + k.map((x) => voornaam(x.naam)).join(', '))),
+        el('button', { class: 'groot', onclick: draai }, t('🎡 Ja, draai en sluit de bestelling', '🎡 Yes, spin and close the order')),
+        el('button', { class: 'secondary groot', onclick: () => { draaiVragen = false; rondeSectie(); } }, t('Nee, nog even wachten', 'No, wait a bit')))
+        : el('button', { class: 'groot', disabled: !ikBesteld || !k.length, onclick: () => { draaiVragen = true; rondeSectie(); } }, t('🎡 Draai aan het rad', '🎡 Spin the wheel')),
       !ikBesteld ? el('p', { class: 'muted klein' }, t('Bestel eerst zelf iets; dan kun je ook draaien.', 'Order something yourself first; then you can spin too.')) : null,
       el('p', { class: 'muted klein' }, t('Na het draaien sluit de bestelling.', 'Spinning closes the order.')
         + (ronde.geopendDoor ? ' ' + t(`Geopend door ${voornaam(naamVan(ronde.geopendDoor))}.`, `Opened by ${voornaam(naamVan(ronde.geopendDoor))}.`) : ''))));
@@ -171,14 +179,14 @@ function speelDraai(winnaar, gezienSleutel) {
   });
 }
 
-async function draai() {
-  if (!confirm(t('Is iedereen klaar? Na het draaien kan niemand meer iets bestellen of wijzigen.',
-    'Is everyone ready? After spinning, nobody can order or change anything.'))) return;
+async function draai(e) {
+  draaiVragen = false;
+  if (e?.target) e.target.disabled = true;
   if (bewaarTimer) await bewaarNu();
   const k = kandidaten();
   if (!k.length) return;
   const i = crypto.getRandomValues(new Uint32Array(1))[0] % k.length;
-  try { await opslag.draai(datum, k[i].id, ik.id); } catch (x) { fout(x); }
+  try { await opslag.draai(datum, k[i].id, ik.id); } catch (x) { fout(x); rondeSectie(); }
 }
 
 function betaalOverzicht(alsBetaler) {
