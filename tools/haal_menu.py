@@ -21,6 +21,13 @@ UIT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().paren
 OVERSLAAN = {'populaire gerechten', 'contact', 'afrekenen', 'bedankt voor je bestelling!'}
 MINIMAAL = 50
 
+# Combinaties die De Posthoorn niet als eigen product heeft, maar wel los verkoopt.
+# Prijs = som van de onderdelen (actuele menuprijzen); ontbreekt een onderdeel, dan valt de combi weg.
+# (naam, categorie waarin hij komt, [namen van de onderdelen])
+COMBIS = [
+    ('Broodje Bourgondische kroket', 'Broodjes', ['Los Broodje', 'Bourgondische kroket']),
+]
+
 KOP_RE = re.compile(r'<h2\b[^>]*>(.*?)</h2>', re.S | re.I)
 KAART_RE = re.compile(r'<div\b[^>]*\bclass="[^"]*\bjs-product-card-content\b[^"]*"[^>]*>', re.I)
 NAAM_RE = re.compile(r'class="[^"]*\bjs-product-card-name\b[^"]*"[^>]*>(.*?)</div>', re.S | re.I)
@@ -83,11 +90,34 @@ def parse(pagina):
     return [c for c in categorieen if c['producten']]
 
 
+def voeg_combis_toe(categorieen):
+    """Zet de COMBIS als product in hun categorie, met de onderdelen erbij (voor de bon-controle)."""
+    op_naam = {}
+    for c in categorieen:
+        for p in c['producten']:
+            op_naam.setdefault(p['naam'].lower(), p)
+    for naam, categorie, onderdelen in COMBIS:
+        delen = [op_naam.get(o.lower()) for o in onderdelen]
+        doel = next((c for c in categorieen if c['naam'].lower() == categorie.lower()), None)
+        if doel is None or not all(delen) or any(p.get('statiegeld') for p in delen):
+            print(f'Combi "{naam}" overgeslagen: onderdeel of categorie niet gevonden.', file=sys.stderr)
+            continue
+        if any(p['naam'].lower() == naam.lower() for p in doel['producten']):
+            continue  # De Posthoorn heeft hem inmiddels zelf
+        doel['producten'].append({
+            'id': 'combi-' + '-'.join(p['id'] for p in delen),
+            'naam': naam,
+            'cents': sum(p['cents'] for p in delen),
+            'delen': [{'naam': p['naam'], 'cents': p['cents']} for p in delen],
+        })
+    return categorieen
+
+
 def main():
     req = urllib.request.Request(URL, headers={'User-Agent': 'Mozilla/5.0 (compatible; frietvrijdag-menu/1.0)'})
     with urllib.request.urlopen(req, timeout=60) as r:
         pagina = r.read().decode('utf-8', 'replace')
-    categorieen = parse(pagina)
+    categorieen = voeg_combis_toe(parse(pagina))
     aantal = sum(len(c['producten']) for c in categorieen)
     if aantal < MINIMAAL:
         print(f'Maar {aantal} producten gevonden; menu.json blijft ongewijzigd.', file=sys.stderr)

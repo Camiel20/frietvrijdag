@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { bestellijst, euro, leesBon, parseEuro, totaalVan, vergelijk } from '../docs/js/bon.js';
+import { besteldeRegels, bestellijst, euro, leesBon, parseEuro, totaalVan, vergelijk } from '../docs/js/bon.js';
 
 const BON = `CAFETARIA DE POSTHOORN
 Tel 0413-123456
@@ -65,4 +65,15 @@ test('bestellijst telt op per product en opmerking', () => {
   assert.deepEqual(lijst.map((x) => [x.aantal, x.naam, x.opmerking, x.wie.join(',')]), [
     [1, 'Friet mayonaise', '', 'Anna'], [3, 'Frikandel', '', 'Anna,Kees'], [1, 'Frikandel', 'speciaal', 'Kees']]);
   assert.equal(totaalVan([{ cents: 230, aantal: 3 }]), 690);
+});
+
+test('combi uit het menu telt op de bon als losse onderdelen', () => {
+  const delen = [{ naam: 'Los Broodje', cents: 110 }, { naam: 'Bourgondische kroket', cents: 270 }];
+  const besteld = besteldeRegels([{ regels: [{ naam: 'Broodje Bourgondische kroket', cents: 380, delen, aantal: 2 }] }]);
+  assert.deepEqual(besteld, [{ naam: 'Los Broodje', aantal: 2, cents: 110 }, { naam: 'Bourgondische kroket', aantal: 2, cents: 270 }]);
+  const { regels, totaal } = leesBon('2 Los Broodje 2,20\n2 Bourgondische kroket 5,40\nTotaal 7,60');
+  assert.deepEqual(vergelijk(besteld, regels, totaal, 760), []);
+  // prijs met de hand gecorrigeerd: dan niet meer splitsen
+  assert.deepEqual(besteldeRegels([{ regels: [{ naam: 'Broodje Bourgondische kroket', cents: 400, delen, aantal: 1 }] }]),
+    [{ naam: 'Broodje Bourgondische kroket', aantal: 1, cents: 400 }]);
 });

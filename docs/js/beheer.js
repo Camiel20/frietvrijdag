@@ -174,6 +174,7 @@ function toevoegForm(datum, namen, bestellingen) {
       const huidig = bestellingen.find((b) => b.id === wie.value)?.regels || [];
       const regel = { id: p?.id || 'hand', naam: product.value.trim().slice(0, 120), cents, aantal: Math.max(1, Math.min(20, +aantal.value || 1)), opmerking: '' };
       if (p?.statiegeld) regel.statiegeld = p.statiegeld;
+      if (p?.delen) regel.delen = p.delen;
       try { document.activeElement?.blur(); await opslag.zetBestelling(datum, wie.value, { regels: [...huidig, regel] }); } catch (x) { fout(x); }
     } }, wie, product, datalist, prijs, aantal, el('button', {}, 'Toevoegen')));
 }

@@ -155,13 +155,20 @@ export function totaalVan(regels) {
   return (regels || []).reduce((s, r) => s + (r.cents + (r.statiegeld || 0)) * r.aantal, 0);
 }
 
-/** Alle bestelde regels plat, met statiegeld als eigen product (zo staat het meestal ook op de bon). */
+/**
+ * Alle bestelde regels plat, met statiegeld als eigen product (zo staat het meestal ook op de bon).
+ * Een combi uit het menu (bv. Broodje Bourgondische kroket) staat op de bon als losse onderdelen;
+ * die komen hier dan ook los in, mits de onderdelen samen de regelprijs zijn (anders is hij gecorrigeerd).
+ */
 export function besteldeRegels(bestellingen) {
   const uit = [];
   let statiegeld = 0, sgPrijs = 0;
   for (const b of bestellingen) {
     for (const r of b.regels || []) {
-      uit.push({ naam: r.naam, aantal: r.aantal, cents: r.cents });
+      const delen = Array.isArray(r.delen) ? r.delen : [];
+      if (delen.length && delen.reduce((s, d) => s + d.cents, 0) === r.cents) {
+        for (const d of delen) uit.push({ naam: d.naam, aantal: r.aantal, cents: d.cents });
+      } else uit.push({ naam: r.naam, aantal: r.aantal, cents: r.cents });
       if (r.statiegeld) { statiegeld += r.aantal; sgPrijs = r.statiegeld; }
     }
   }

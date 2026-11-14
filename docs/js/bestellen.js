@@ -290,7 +290,7 @@ function voegToe(p) {
   const bestaand = regels.find((r) => r.id === p.id && !r.opmerking);
   if (bestaand) bestaand.aantal = Math.min(MAX_AANTAL, bestaand.aantal + 1);
   else if (regels.length >= MAX_REGELS) return alert(t('Dat zijn wel heel veel regels.', 'That’s an awful lot of lines.'));
-  else regels.push({ id: p.id, naam: p.naam, cents: p.cents, ...(p.statiegeld ? { statiegeld: p.statiegeld } : {}), aantal: 1, opmerking: '' });
+  else regels.push({ id: p.id, naam: p.naam, cents: p.cents, ...(p.statiegeld ? { statiegeld: p.statiegeld } : {}), ...(p.delen ? { delen: p.delen } : {}), aantal: 1, opmerking: '' });
   mandSectie();
   plan();
   const knop = document.querySelector(`[data-pid="${p.id}"]`);

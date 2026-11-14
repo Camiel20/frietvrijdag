@@ -969,6 +969,21 @@
      "id": "669328",
      "naam": "Los Broodje",
      "cents": 110
+    },
+    {
+     "id": "combi-669328-566375",
+     "naam": "Broodje Bourgondische kroket",
+     "cents": 380,
+     "delen": [
+      {
+       "naam": "Los Broodje",
+       "cents": 110
+      },
+      {
+       "naam": "Bourgondische kroket",
+       "cents": 270
+      }
+     ]
     }
    ]
   },
