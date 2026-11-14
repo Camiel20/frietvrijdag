@@ -26,6 +26,7 @@ MINIMAAL = 50
 # (naam, categorie waarin hij komt, [namen van de onderdelen])
 COMBIS = [
     ('Broodje Bourgondische kroket', 'Broodjes', ['Los Broodje', 'Bourgondische kroket']),
+    ('Broodje Bourgondische kroket met mosterd', 'Broodjes', ['Los Broodje', 'Bourgondische kroket', 'Mosterd']),
 ]
 
 KOP_RE = re.compile(r'<h2\b[^>]*>(.*?)</h2>', re.S | re.I)

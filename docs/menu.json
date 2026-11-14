@@ -984,6 +984,25 @@
        "cents": 270
       }
      ]
+    },
+    {
+     "id": "combi-669328-566375-726695",
+     "naam": "Broodje Bourgondische kroket met mosterd",
+     "cents": 505,
+     "delen": [
+      {
+       "naam": "Los Broodje",
+       "cents": 110
+      },
+      {
+       "naam": "Bourgondische kroket",
+       "cents": 270
+      },
+      {
+       "naam": "Mosterd",
+       "cents": 125
+      }
+     ]
     }
    ]
   },
