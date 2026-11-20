@@ -1,11 +1,13 @@
 name: Menu ophalen
 
-# Elke nacht (en op vrijdagochtend nog een keer) het menu van De Posthoorn ophalen.
+# Elke nacht (en op vrijdagochtend elk uur) het menu van De Posthoorn ophalen.
 # Alleen bij een wijziging komt er een commit; GitHub Pages zet die vanzelf live.
+# GitHub vertraagt geplande runs soms uren (03:17 draaide in de praktijk rond 11:00) of slaat
+# ze over; daarom op vrijdag meerdere kansen, zodat de week-actie er vóór de lunch staat.
 on:
   schedule:
     - cron: '17 3 * * *'     # dagelijks 03:17 UTC
-    - cron: '7 8 * * 5'      # vrijdag 08:07 UTC (09:07/10:07 NL)
+    - cron: '41 5-10 * * 5'  # vrijdag elk uur 05:41–10:41 UTC (06:41–11:41 NL in de winter)
   workflow_dispatch: {}       # handmatig: Actions → Menu ophalen → Run workflow
 
 permissions:
