@@ -6,7 +6,7 @@
    "producten": [
     {
      "id": "617100",
-     "naam": "Snack van de week: BelCanto",
+     "naam": "Snack van de week: ShoarmaKroket",
      "cents": 225
     },
     {
@@ -668,6 +668,16 @@
      "id": "738752",
      "naam": "CroquetBurger",
      "cents": 475
+    },
+    {
+     "id": "740435",
+     "naam": "Pepernootfrietje",
+     "cents": 300
+    },
+    {
+     "id": "740436",
+     "naam": "S-Frkandel XXL",
+     "cents": 400
     }
    ]
   },
@@ -1451,5 +1461,5 @@
    ]
   }
  ],
- "bijgewerkt": "2026-11-15T10:51:19+00:00"
+ "bijgewerkt": "2026-11-20T09:21:30+00:00"
 }
