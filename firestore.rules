@@ -71,9 +71,28 @@ service cloud.firestore {
       function bestellingVan(id) {
         return get(/databases/$(database)/documents/rondes/$(datum)/bestellingen/$(id)).data;
       }
-      // Draaien aan het rad: één keer, door iemand die besteld heeft; het rad kiest iemand die besteld heeft.
+      // Draaien mag pas vanaf 12:00 Nederlandse tijd op de vrijdag zelf, zodat iedereen kan bestellen.
+      // Zomertijd (UTC+2) loopt van de laatste zondag van maart tot de laatste zondag van oktober.
+      // dayOfWeek(): 1 = maandag … 7 = zondag, dus 31 - (dag van de 31e % 7) = de laatste zondag.
+      // (Zelfde moment als draaienVanaf() in docs/js/datum.js; tests/datum.test.js controleert de formule.)
+      function isZomertijd(j, m, d) {
+        return (m > 3 && m < 10)
+          || (m == 3 && d > 31 - (timestamp.date(j, 3, 31).dayOfWeek() % 7))
+          || (m == 10 && d < 31 - (timestamp.date(j, 10, 31).dayOfWeek() % 7));
+      }
+      function naTwaalfUur() {
+        let p = datum.split('-');
+        let j = int(p[0]);
+        let m = int(p[1]);
+        let d = int(p[2]);
+        let middernacht = timestamp.date(j, m, d);
+        return (isZomertijd(j, m, d) && request.time >= middernacht + duration.value(10, 'h'))
+          || (!isZomertijd(j, m, d) && request.time >= middernacht + duration.value(11, 'h'));
+      }
+      // Draaien aan het rad: één keer, vanaf 12:00, door iemand die besteld heeft; het rad kiest iemand die besteld heeft.
       function draaien() {
         return resource.data.betaler == null
+          && naTwaalfUur()
           && gewijzigd().hasOnly(['betaler', 'gedraaidDoor', 'gedraaidOp', 'open'])
           && nieuw().open == false
           && nieuw().gedraaidDoor == ik()

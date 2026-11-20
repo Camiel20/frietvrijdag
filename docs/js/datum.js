@@ -21,3 +21,17 @@ export function datumTekst(iso, jaar = false, taal = 'nl') {
   return new Date(iso + 'T12:00:00').toLocaleDateString(taal === 'en' ? 'en-GB' : 'nl-NL',
     { weekday: 'long', day: 'numeric', month: 'long', ...(jaar ? { year: 'numeric' } : {}) });
 }
+
+/** Vanaf dit uur (Nederlandse tijd) mag er op de vrijdag zelf aan het rad gedraaid worden. Ook in firestore.rules. */
+export const DRAAIEN_VANAF_UUR = 12;
+
+/** Het moment waarop op deze vrijdag ('YYYY-MM-DD') gedraaid mag worden: 12:00 in Nederland, waar de browser ook staat. */
+export function draaienVanaf(iso) {
+  const [j, m, d] = iso.split('-').map(Number);
+  const uurIn = new Intl.DateTimeFormat('nl-NL', { timeZone: 'Europe/Amsterdam', hour: 'numeric', hourCycle: 'h23' });
+  for (const verschil of [1, 2]) { // wintertijd UTC+1, zomertijd UTC+2
+    const moment = new Date(Date.UTC(j, m - 1, d, DRAAIEN_VANAF_UUR - verschil));
+    if (Number(uurIn.format(moment)) === DRAAIEN_VANAF_UUR) return moment;
+  }
+  return new Date(j, m - 1, d, DRAAIEN_VANAF_UUR);
+}

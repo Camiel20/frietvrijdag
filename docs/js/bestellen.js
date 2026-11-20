@@ -10,7 +10,7 @@
 //     de betaler vinkt per persoon "Ontvangen" aan.
 import { DEMO, bestelLink, el, laadMenu, opslag } from './opslag.js';
 import { besteldeRegels, bestellijst, euro, leesBon, totaalVan, vergelijk } from './bon.js';
-import { datumTekst, komendeVrijdag, vorigeVrijdagen } from './datum.js';
+import { DRAAIEN_VANAF_UUR, datumTekst, draaienVanaf, komendeVrijdag, vorigeVrijdagen } from './datum.js';
 import { maakRad } from './rad.js';
 import { bonPaneel } from './bonui.js';
 import { EN, TAAL, t, wisselTaal } from './taal.js';
@@ -27,7 +27,8 @@ const GEZIEN = 'frietvrijdag-rad-gezien-';
 let ik, menu, ronde = null, bestellingen = [], regels = [];
 const namen = new Map();
 let mandGeladen = false, rondeGeladen = false, bestellingenGeladen = false;
-let rad = null, radSleutel = '', radBezig = false, draaiVragen = false;
+let rad = null, radSleutel = '', radBezig = false, draaiVragen = false, draaiTimer = null;
+const teVroegOmTeDraaien = () => Date.now() < draaienVanaf(datum).getTime();
 let bewaarTimer = null, bewaren = Promise.resolve();
 let tikkieVeld = null, bonEl = null, bonOpen = null, overzichtOpen = false;
 
@@ -118,6 +119,13 @@ function rondeSectie() {
 
   if (ronde.open) {
     const ikBesteld = regelsVan(mijn()).length > 0;
+    // Vóór 12:00 kan niemand draaien (ook de regels weigeren het); om 12:00 gaat de knop vanzelf aan.
+    const teVroeg = teVroegOmTeDraaien();
+    clearTimeout(draaiTimer);
+    if (teVroeg) {
+      draaiVragen = false;
+      draaiTimer = setTimeout(rondeSectie, Math.min(draaienVanaf(datum).getTime() - Date.now() + 1000, 2 ** 31 - 1));
+    }
     rad.teken();
     return sec.replaceChildren(el('section', { class: 'panel radpaneel' },
       el('h2', {}, t('Wie betaalt er deze keer?', 'Who pays this time?')),
@@ -132,8 +140,10 @@ function rondeSectie() {
         el('p', {}, el('small', {}, t(`Op het rad (${k.length}): `, `On the wheel (${k.length}): `) + k.map((x) => voornaam(x.naam)).join(', '))),
         el('button', { class: 'groot', onclick: draai }, t('🎡 Ja, draai en sluit de bestelling', '🎡 Yes, spin and close the order')),
         el('button', { class: 'secondary groot', onclick: () => { draaiVragen = false; rondeSectie(); } }, t('Nee, nog even wachten', 'No, wait a bit')))
-        : el('button', { class: 'groot', disabled: !ikBesteld || !k.length, onclick: () => { draaiVragen = true; rondeSectie(); } }, t('🎡 Draai aan het rad', '🎡 Spin the wheel')),
-      !ikBesteld ? el('p', { class: 'muted klein' }, t('Bestel eerst zelf iets; dan kun je ook draaien.', 'Order something yourself first; then you can spin too.')) : null,
+        : el('button', { class: 'groot', disabled: teVroeg || !ikBesteld || !k.length, onclick: () => { draaiVragen = true; rondeSectie(); } }, t('🎡 Draai aan het rad', '🎡 Spin the wheel')),
+      teVroeg ? el('p', { class: 'muted klein' }, t(`Draaien kan vanaf ${DRAAIEN_VANAF_UUR}:00 uur, zodat iedereen eerst kan bestellen.`,
+        `You can spin from ${DRAAIEN_VANAF_UUR}:00 (noon), so everyone gets the chance to order first.`))
+      : !ikBesteld ? el('p', { class: 'muted klein' }, t('Bestel eerst zelf iets; dan kun je ook draaien.', 'Order something yourself first; then you can spin too.')) : null,
       el('p', { class: 'muted klein' }, t('Na het draaien sluit de bestelling.', 'Spinning closes the order.')
         + (ronde.geopendDoor ? ' ' + t(`Geopend door ${voornaam(naamVan(ronde.geopendDoor))}.`, `Opened by ${voornaam(naamVan(ronde.geopendDoor))}.`) : ''))));
   }
@@ -181,6 +191,10 @@ function speelDraai(winnaar, gezienSleutel) {
 
 async function draai(e) {
   draaiVragen = false;
+  if (teVroegOmTeDraaien()) {
+    alert(t(`Draaien kan pas vanaf ${DRAAIEN_VANAF_UUR}:00 uur.`, `You can only spin from ${DRAAIEN_VANAF_UUR}:00.`));
+    return rondeSectie();
+  }
   if (e?.target) e.target.disabled = true;
   if (bewaarTimer) await bewaarNu();
   const k = kandidaten();

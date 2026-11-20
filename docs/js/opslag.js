@@ -5,6 +5,7 @@
 // Belangrijk: de token uit de persoonlijke link staat nergens leesbaar. Collega's zien elkaars
 // naam (deelnemers/{id}) en bestelling (bestellingen/{id}), nooit elkaars token.
 import { firebaseConfig } from './firebase-config.js';
+import { draaienVanaf } from './datum.js';
 
 const FB = 'https://www.gstatic.com/firebasejs/10.14.1/';
 export const DEMO = !firebaseConfig.apiKey;
@@ -169,6 +170,7 @@ function demo() {
     async draai(datum, betaler, door) {
       const s = st(); const r = s.rondes[datum];
       if (r.betaler) weiger('er is al gedraaid');
+      if (Date.now() < draaienVanaf(datum).getTime()) weiger('draaien kan pas vanaf 12:00');
       if (!(s.bestellingen[datum]?.[betaler]?.regels?.length)) weiger('betaler heeft niet besteld');
       Object.assign(r, { betaler, gedraaidDoor: door, gedraaidOp: new Date().toISOString(), open: false });
       schrijf(s);

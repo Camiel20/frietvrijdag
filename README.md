@@ -77,7 +77,8 @@ beide vinkjes corrigeren.
   naam en bestelling (nodig voor het rad en de betalingen), nooit elkaars link.
 - Een collega kan alleen zijn eigen bestelling wijzigen (zolang de ronde open is), alleen zijn
   eigen "Ik heb betaald" zetten, en alleen als betaler "Ontvangen" en de Tikkie-link zetten.
-  Draaien kan één keer per ronde, en het rad kan alleen iemand kiezen die besteld heeft.
+  Draaien kan één keer per ronde en pas vanaf 12:00 (Nederlandse tijd) op de vrijdag zelf, en het rad
+  kan alleen iemand kiezen die besteld heeft.
 - Link gelekt of iemand weg: **Nieuwe link** of **Uitzetten**; de oude link werkt dan meteen niet meer.
 - Beheerder ben je alleen met een document `beheer/{jouw-ID}`, en dat kan alleen via de
   Firebase-console worden aangemaakt.
