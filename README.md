@@ -21,7 +21,9 @@ Alles gaat via de eigen link; de beheerpagina heb je daarvoor niet nodig.
 
 1. **Openen.** Wie zin heeft in friet, opent de bestelling. Er kan er maar één per vrijdag zijn
    (het is altijd de bestelling van vandaag, of van de eerstvolgende vrijdag).
-2. **Bestellen.** Iedereen tikt aan wat hij wil; het wordt vanzelf bewaard.
+2. **Bestellen.** Iedereen tikt aan wat hij wil; het wordt vanzelf bewaard. Klaar? *Bestelling
+   bevestigen* zet hem vast (✓ bevestigd; *Wijzigen* zet hem weer open zolang er niet gedraaid is),
+   en bij het rad ziet iedereen wie nog niet bevestigd heeft. Ook onbevestigd telt een bestelling mee.
 3. **Het rad.** Iemand die besteld heeft, draait aan het rad. De bestelling sluit en het rad
    kiest uit iedereen die besteld heeft wie de rekening betaalt. Iedereen ziet het rad draaien
    (ook wie de pagina later opent; met *Nog een keer zien* speel je hem opnieuw af).

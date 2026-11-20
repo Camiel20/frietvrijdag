@@ -14,7 +14,7 @@ rules_version = '2';
 //  tokens/{token}                     {deelnemer}                    alleen ophalen als je de token kent
 //  koppelingen/{uid}                  {token, deelnemer}
 //  rondes/{vrijdag}                   {datum, open, geopendDoor, betaler, gedraaidDoor, gedraaidOp, tikkie, bonTekst, bonTotaal, notities}
-//  rondes/{vrijdag}/bestellingen/{deelnemer}   {regels, betaald, ontvangen, bijgewerkt}
+//  rondes/{vrijdag}/bestellingen/{deelnemer}   {regels, bevestigd, betaald, ontvangen, bijgewerkt}
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -125,15 +125,18 @@ service cloud.firestore {
 
       match /bestellingen/{id} {
         function ronde() { return get(/databases/$(database)/documents/rondes/$(datum)).data; }
-        function regelsGoed() { return nieuw().regels is list && nieuw().regels.size() <= 30; }
+        function regelsGoed() {
+          return nieuw().regels is list && nieuw().regels.size() <= 30
+            && (!('bevestigd' in nieuw()) || nieuw().bevestigd is bool);
+        }
 
         allow read: if isBeheerder() || isDeelnemer();
         allow delete: if isBeheerder();
         allow create: if isBeheerder() || (isDeelnemer() && id == ik() && ronde().open == true
-          && nieuw().keys().hasOnly(['regels', 'bijgewerkt']) && regelsGoed());
+          && nieuw().keys().hasOnly(['regels', 'bevestigd', 'bijgewerkt']) && regelsGoed());
         allow update: if isBeheerder() || (isDeelnemer() && (
-          // eigen bestelling aanpassen zolang de ronde open is
-          (id == ik() && ronde().open == true && gewijzigd().hasOnly(['regels', 'bijgewerkt']) && regelsGoed())
+          // eigen bestelling aanpassen, bevestigen of weer openzetten zolang de ronde open is
+          (id == ik() && ronde().open == true && gewijzigd().hasOnly(['regels', 'bevestigd', 'bijgewerkt']) && regelsGoed())
           // "ik heb betaald" — ook na het sluiten
           || (id == ik() && gewijzigd().hasOnly(['betaald']) && nieuw().betaald is bool)
           // de betaler bevestigt dat het geld binnen is

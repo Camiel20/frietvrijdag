@@ -118,7 +118,7 @@ function tekenRonde(ronde, bestellingen, namen) {
     el('p', { class: 'muted klein' }, '"Zegt betaald" zet de collega zelf; "Ontvangen" zet de betaler. Hier kun je beide corrigeren.'),
     actief.length ? actief.map((b) => el('div', { class: 'persoonblok' },
       el('div', { class: 'person' },
-        el('div', {}, el('strong', {}, b.naam + (b.id === ronde.betaler ? ' 💳' : '')), el('small', {}, euro(totaalVan(b.regels)))),
+        el('div', {}, el('strong', {}, b.naam + (b.id === ronde.betaler ? ' 💳' : '')), el('small', {}, euro(totaalVan(b.regels)) + (ronde.open ? (b.bevestigd ? ' · ✓ bevestigd' : ' · nog niet bevestigd') : ''))),
         b.id === ronde.betaler ? el('span', { class: 'chip ok' }, 'betaalt de rekening') : el('div', { class: 'actions' },
           el('button', { class: b.betaald ? 'paid' : 'secondary', onclick: () => opslag.zetBestelling(datum, b.id, { betaald: !b.betaald }).catch(fout) },
             b.betaald ? '✓ Zegt betaald' : 'Zegt betaald?'),

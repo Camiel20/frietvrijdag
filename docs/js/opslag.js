@@ -62,8 +62,9 @@ async function firestore() {
       const ref = d('rondes', datum);
       await fs.runTransaction(db, async (tx) => { if (!(await tx.get(ref)).exists()) tx.set(ref, nieuweRonde(datum, ik)); });
     },
-    bewaarRegels(datum, id, regels) {
-      return fs.setDoc(d('rondes', datum, 'bestellingen', id), { regels, bijgewerkt: fs.serverTimestamp() }, { merge: true });
+    /** extra = {bevestigd: true|false} bij bevestigen of weer wijzigen. */
+    bewaarRegels(datum, id, regels, extra = {}) {
+      return fs.setDoc(d('rondes', datum, 'bestellingen', id), { regels, ...extra, bijgewerkt: fs.serverTimestamp() }, { merge: true });
     },
     zetBetaald(datum, id, betaald) { return fs.updateDoc(d('rondes', datum, 'bestellingen', id), { betaald }); },
     zetOntvangen(datum, id, ontvangen) { return fs.updateDoc(d('rondes', datum, 'bestellingen', id), { ontvangen }); },
@@ -152,11 +153,11 @@ function demo() {
       return volg(() => cb(Object.entries(st().bestellingen[datum] || {}).map(([id, v]) => ({ id, ...v }))));
     },
     async openRonde(datum, door) { const s = st(); s.rondes[datum] ??= nieuweRonde(datum, door); schrijf(s); },
-    async bewaarRegels(datum, id, regels) {
+    async bewaarRegels(datum, id, regels, extra = {}) {
       const s = st();
       if (!s.rondes[datum]?.open) weiger('ronde is gesloten');
       if (id !== ik) weiger('niet je eigen bestelling');
-      const b = best(s, datum); b[id] = { ...b[id], regels, bijgewerkt: new Date().toISOString() };
+      const b = best(s, datum); b[id] = { ...b[id], regels, ...extra, bijgewerkt: new Date().toISOString() };
       schrijf(s);
     },
     async zetBetaald(datum, id, betaald) {

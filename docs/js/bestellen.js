@@ -2,7 +2,8 @@
 //
 // Verloop van een vrijdag:
 //  1. Iemand opent de bestelling (één per vrijdag).
-//  2. Iedereen kiest zijn friet; het wordt vanzelf bewaard.
+//  2. Iedereen kiest zijn friet; het wordt vanzelf bewaard. Klaar? "Bestelling bevestigen" zet hem
+//     vast (met "Wijzigen" weer open zolang er niet gedraaid is) en laat de anderen zien dat je klaar bent.
 //  3. Iemand draait aan het rad: de bestelling sluit en het rad kiest wie de rekening betaalt
 //     (alleen wie besteld heeft staat erop). Iedereen ziet het rad draaien.
 //  4. De betaler bestelt, zet zijn Tikkie-link erin en kan de bon uitlezen.
@@ -39,7 +40,7 @@ const link = (d) => bestelLink(token, d, TAAL);
 const regelsVan = (b) => b?.regels || [];
 const mijn = () => bestellingen.find((b) => b.id === ik.id);
 const kandidaten = () => bestellingen.filter((b) => regelsVan(b).length)
-  .map((b) => ({ id: b.id, naam: naamVan(b.id) })).sort((a, b) => a.naam.localeCompare(b.naam, 'nl'));
+  .map((b) => ({ id: b.id, naam: naamVan(b.id), bevestigd: !!b.bevestigd })).sort((a, b) => a.naam.localeCompare(b.naam, 'nl'));
 const metNamen = (lijst) => lijst.map((b) => ({ ...b, naam: naamVan(b.id) }));
 
 function bericht(titel, tekst) {
@@ -90,6 +91,22 @@ window.addEventListener('pagehide', () => { if (bewaarTimer) bewaarNu(); });
 // Andere link in hetzelfde tabblad (alleen het deel na # verschilt): opnieuw laden, anders blijft de vorige persoon actief.
 window.addEventListener('hashchange', async () => { if (bewaarTimer) await bewaarNu(); location.reload(); });
 
+/** Eigen bestelling bevestigen (aan) of weer openzetten om te wijzigen (uit). Bewaart meteen, met de regels erbij. */
+async function zetBevestigd(aan, knop) {
+  clearTimeout(bewaarTimer);
+  bewaarTimer = null;
+  if (!aan) regels = regelsVan(mijn()).map((r) => ({ ...r }));
+  if (aan && !regels.length) return;
+  if (knop) knop.disabled = true;
+  const kopie = regels.map((r) => ({ ...r }));
+  const klaar = bewaren.then(() => opslag.bewaarRegels(datum, ik.id, kopie, { bevestigd: aan }));
+  bewaren = klaar.catch(() => {});
+  try {
+    await klaar;
+    zetStatus(aan ? t('✓ Bestelling bevestigd', '✓ Order confirmed') : t('Je kunt je bestelling weer aanpassen', 'You can change your order again'), 'ok');
+  } catch (x) { fout(x); if (knop) knop.disabled = false; }
+}
+
 // ---------------------------------------------------------------- 1. ronde openen / 3. rad / 4-5. betalen
 
 function rondeSectie() {
@@ -127,6 +144,7 @@ function rondeSectie() {
       draaiTimer = setTimeout(rondeSectie, Math.min(draaienVanaf(datum).getTime() - Date.now() + 1000, 2 ** 31 - 1));
     }
     rad.teken();
+    const nietBevestigd = k.filter((x) => !x.bevestigd).map((x) => voornaam(x.naam));
     return sec.replaceChildren(el('section', { class: 'panel radpaneel' },
       el('h2', {}, t('Wie betaalt er deze keer?', 'Who pays this time?')),
       el('p', { class: 'muted' }, t('Iedereen die besteld heeft, staat op het rad. Is iedereen klaar? Eén draai beslist wie de rekening betaalt.',
@@ -137,10 +155,16 @@ function rondeSectie() {
         el('strong', {}, t('⚠️ Hierna is de bestelling gesloten', '⚠️ This closes the order')),
         el('p', {}, t('Na het draaien kan niemand meer iets bestellen of wijzigen. Heeft iedereen besteld?',
           'After spinning, nobody can order or change anything. Has everyone ordered?')),
-        el('p', {}, el('small', {}, t(`Op het rad (${k.length}): `, `On the wheel (${k.length}): `) + k.map((x) => voornaam(x.naam)).join(', '))),
+        el('p', {}, el('small', {}, t(`Op het rad (${k.length}): `, `On the wheel (${k.length}): `) + k.map((x) => voornaam(x.naam) + (x.bevestigd ? ' ✓' : '')).join(', '))),
+        nietBevestigd.length ? el('p', {}, t(`Nog niet bevestigd: ${nietBevestigd.join(', ')}. Even vragen of ze klaar zijn?`,
+          `Not confirmed yet: ${nietBevestigd.join(', ')}. Check if they’re done?`)) : null,
         el('button', { class: 'groot', onclick: draai }, t('🎡 Ja, draai en sluit de bestelling', '🎡 Yes, spin and close the order')),
         el('button', { class: 'secondary groot', onclick: () => { draaiVragen = false; rondeSectie(); } }, t('Nee, nog even wachten', 'No, wait a bit')))
         : el('button', { class: 'groot', disabled: teVroeg || !ikBesteld || !k.length, onclick: () => { draaiVragen = true; rondeSectie(); } }, t('🎡 Draai aan het rad', '🎡 Spin the wheel')),
+      !draaiVragen && k.length ? el('p', { class: 'muted klein' }, nietBevestigd.length
+        ? t(`Bevestigd: ${k.length - nietBevestigd.length} van ${k.length}. Nog niet: ${nietBevestigd.join(', ')}.`,
+          `Confirmed: ${k.length - nietBevestigd.length} of ${k.length}. Not yet: ${nietBevestigd.join(', ')}.`)
+        : t(`Iedereen op het rad heeft bevestigd (${k.length}).`, `Everyone on the wheel has confirmed (${k.length}).`)) : null,
       teVroeg ? el('p', { class: 'muted klein' }, t(`Draaien kan vanaf ${DRAAIEN_VANAF_UUR}:00 uur, zodat iedereen eerst kan bestellen.`,
         `You can spin from ${DRAAIEN_VANAF_UUR}:00 (noon), so everyone gets the chance to order first.`))
       : !ikBesteld ? el('p', { class: 'muted klein' }, t('Bestel eerst zelf iets; dan kun je ook draaien.', 'Order something yourself first; then you can spin too.')) : null,
@@ -316,12 +340,15 @@ function mandSectie() {
   mand.hidden = !ronde;
   if (!ronde) return;
   const open = ronde.open;
-  const lijst = open ? regels : regelsVan(mijn());
-  const kids = [el('h2', {}, t('Jouw bestelling', 'Your order'))];
+  const bevestigd = open && !!mijn()?.bevestigd;
+  const vast = !open || bevestigd;
+  const lijst = vast ? regelsVan(mijn()) : regels;
+  const kids = [el('div', { class: 'panel-head' }, el('h2', {}, t('Jouw bestelling', 'Your order')),
+    bevestigd ? el('span', { class: 'chip ok' }, t('✓ bevestigd', '✓ confirmed')) : null)];
   if (!lijst.length) kids.push(el('p', { class: 'muted' }, open ? t('Nog niets gekozen. Tik hieronder op + bij wat je wilt.', 'Nothing chosen yet. Tap + below next to what you want.')
     : t('Je hebt niets besteld.', 'You didn’t order anything.')));
   lijst.forEach((r, i) => {
-    if (!open) {
+    if (vast) {
       kids.push(el('div', { class: 'line' },
         el('div', {}, el('strong', {}, `${r.aantal} × ${r.naam}`), r.opmerking ? el('small', {}, r.opmerking) : null),
         el('strong', {}, euro((r.cents + (r.statiegeld || 0)) * r.aantal))));
@@ -340,12 +367,22 @@ function mandSectie() {
   });
   kids.push(el('div', { class: 'sum' }, el('span', {}, t('Jouw totaal', 'Your total')), el('strong', {}, euro(totaalVan(lijst)))));
   if (lijst.some((r) => r.statiegeld)) kids.push(el('p', { class: 'muted klein' }, t('Inclusief statiegeld op blikjes/flesjes.', 'Including deposit on cans/bottles.')));
+  if (bevestigd) {
+    kids.push(el('p', { class: 'notice ok' }, t('✓ Je bestelling is bevestigd. Je staat op het rad; meer hoef je nu niet te doen.',
+      '✓ Your order is confirmed. You’re on the wheel; nothing else to do for now.')),
+    el('button', { class: 'secondary', onclick: (e) => zetBevestigd(false, e.target) }, t('Wijzigen', 'Change')),
+    el('p', { class: 'muted klein' }, t('Wijzigen kan tot er aan het rad gedraaid is.', 'You can change it until the wheel is spun.')));
+  } else if (open && lijst.length) {
+    kids.push(el('button', { class: 'groot', onclick: (e) => zetBevestigd(true, e.target) }, t('✓ Bestelling bevestigen', '✓ Confirm my order')),
+      el('p', { class: 'muted klein' }, t('Klaar met kiezen? Bevestig je bestelling, dan zien de anderen dat je klaar bent. Wat je aanklikt is al bewaard.',
+        'Done choosing? Confirm your order so the others can see you’re done. What you pick is already saved.')));
+  }
   mand.replaceChildren(...kids);
 }
 
 function menuSectie() {
   const sec = document.getElementById('menu');
-  sec.hidden = !ronde?.open;
+  sec.hidden = !ronde?.open || !!mijn()?.bevestigd;
   if (sec.hidden || sec.childElementCount) return;
   const zoek = el('input', { type: 'search', id: 'zoek', placeholder: t('Zoek friet, snack, broodje…', 'Search fries, snacks, sandwiches…'), 'aria-label': t('Zoeken', 'Search'), oninput: filter });
   const chips = el('nav', { class: 'chips' }, menu.categorieen.map((c, i) =>
