@@ -28,6 +28,8 @@ Alles gaat via de eigen link; de beheerpagina heb je daarvoor niet nodig.
    kiest uit iedereen die besteld heeft wie de rekening betaalt. Iedereen ziet het rad draaien
    (ook wie de pagina later opent; met *Nog een keer zien* speel je hem opnieuw af).
 4. **De betaler** kopieert de bestellijst, bestelt, en plakt zijn **Tikkie-link** op de pagina.
+   Iedereen ziet de hele bestellijst ook (*Hele bestelling bekijken*, met Kopieer), zodat een ander
+   het bestellen kan overnemen als de betaler het druk heeft.
    Optioneel: bon uitlezen voor de controle.
 5. **Betalen.** Ieder ziet "Jij betaalt Cees € 7,80", betaalt via de link en vinkt
    **Ik heb betaald** aan. De betaler ziet "zegt: betaald" en vinkt **Ontvangen** aan zodra het

@@ -31,7 +31,7 @@ let mandGeladen = false, rondeGeladen = false, bestellingenGeladen = false;
 let rad = null, radSleutel = '', radBezig = false, draaiVragen = false, draaiTimer = null;
 const teVroegOmTeDraaien = () => Date.now() < draaienVanaf(datum).getTime();
 let bewaarTimer = null, bewaren = Promise.resolve();
-let tikkieVeld = null, bonEl = null, bonOpen = null, overzichtOpen = false;
+let tikkieVeld = null, bonEl = null, bonOpen = null, overzichtOpen = false, lijstOpen = false;
 
 const voornaam = (n) => String(n || '').split(' ')[0];
 const naamVan = (id) => namen.get(id)?.naam || t('iemand', 'someone');
@@ -299,6 +299,23 @@ function betalerBlokken() {
   ];
 }
 
+/** De hele bestelling voor iedereen: heeft de betaler het druk, dan kan een ander hem bij De Posthoorn plaatsen. */
+function heleBestellingBlok(betaler) {
+  const lijst = bestellijst(metNamen(bestellingen));
+  const lijstTekst = lijst.map((g) => `${g.aantal}x ${g.naam}${g.opmerking ? ` (${g.opmerking})` : ''}`).join('\n');
+  const totaal = bestellingen.reduce((s, b) => s + totaalVan(b.regels), 0);
+  return el('section', { class: 'panel' }, el('details', { open: lijstOpen || undefined, ontoggle: (e) => { lijstOpen = e.target.open; } },
+    el('summary', {}, t('Hele bestelling bekijken', 'View the whole order')),
+    el('div', { class: 'panel-head' },
+      el('p', { class: 'muted klein' }, t(`Heeft ${betaler} het druk? Dan kan iemand anders de bestelling met Kopieer bij De Posthoorn plaatsen. Betalen doe je nog steeds aan ${betaler}.`,
+        `Is ${betaler} busy? Then someone else can place the order at De Posthoorn using Copy. You still pay ${betaler}.`)),
+      el('button', { class: 'secondary', onclick: (e) => kopieer(lijstTekst, e.target) }, t('Kopieer', 'Copy'))),
+    lijst.map((g) => el('div', { class: 'line' },
+      el('div', {}, el('strong', {}, `${g.aantal} × ${g.naam}`), g.opmerking ? el('small', {}, g.opmerking) : null),
+      el('small', { class: 'who' }, g.wie.join(', ')))),
+    el('div', { class: 'sum' }, el('span', {}, t('Totaal (menuprijzen)', 'Total (menu prices)')), el('strong', {}, euro(totaal)))));
+}
+
 function deelnemerBlokken() {
   const m = mijn();
   const betaler = voornaam(naamVan(ronde.betaler));
@@ -318,6 +335,7 @@ function deelnemerBlokken() {
   } else {
     blokken.push(el('section', { class: 'panel' }, el('p', { class: 'muted' }, t('Je deed deze keer niet mee.', 'You didn’t join this time.'))));
   }
+  blokken.push(heleBestellingBlok(betaler));
   blokken.push(el('section', { class: 'panel' }, el('details', { open: overzichtOpen || undefined, ontoggle: (e) => { overzichtOpen = e.target.open; } }, el('summary', {}, t('Wie heeft er al betaald?', 'Who has paid already?')), betaalOverzicht(false))));
   return blokken;
 }
