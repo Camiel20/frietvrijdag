@@ -7,7 +7,8 @@ bevestigt per persoon. De betaler kan de kassabon uitlezen met de camera en ziet
 bestellingen verschillen. Er wordt niets automatisch verdeeld: verschillen worden alleen gemeld.
 
 Draait gratis: GitHub Pages (de site), Firebase Firestore (de bestellingen) en een
-GitHub Action (het menu). Geen server, geen AI-sleutel. De bon wordt in de browser gelezen
+GitHub Action (de reservekopie van het menu). Het menu zelf haalt de pagina live van de site van
+De Posthoorn, dus de snack van de week klopt altijd. Geen server, geen AI-sleutel. De bon wordt in de browser gelezen
 (Tesseract.js); de foto verlaat het apparaat niet.
 
 | Pagina | Voor wie |
@@ -98,14 +99,27 @@ npm run menu     # menu.json lokaal verversen
 ```
 
 Bestanden: `docs/` is de site (`js/bestellen.js`, `js/beheer.js`, `js/bon.js` = bon lezen en
-vergelijken, `js/opslag.js` = Firestore of demo), `tools/haal_menu.py` haalt het menu op,
-`.github/workflows/menu.yml` draait dat elke nacht.
+vergelijken, `js/opslag.js` = Firestore of demo, `js/menu.js` = het menu uit de Posthoorn-pagina
+lezen), `tools/haal_menu.py` doet hetzelfde voor `menu.json`, `.github/workflows/menu.yml` draait
+dat elke nacht.
+
+## Het menu
+
+- De bestel- en beheerpagina halen het menu **live** van de site van De Posthoorn (die staat dat
+  toe: `Access-Control-Allow-Origin: *`) en lezen het uit met `docs/js/menu.js`. Onder het menu
+  staat dan *live van de website*. Het is ±190 kB en ±1 seconde.
+- Lukt dat niet binnen 6 seconden, of geeft het minder dan 50 producten, dan gebruikt de pagina
+  `docs/menu.json` (met *bijgewerkt &lt;datum&gt;* eronder). Die houdt de Action elke nacht bij;
+  GitHub draait die vaak uren te laat of slaat hem over, daarom is hij alleen nog de reserve.
+- `docs/js/menu.js` en `tools/haal_menu.py` lezen op dezelfde manier (ook de combi's).
+  Wijzig je de ene, wijzig dan de andere; `npm test` vergelijkt ze.
 
 ## Goed om te weten
 
 - GitHub zet geplande Actions in een openbare repo uit na 60 dagen zonder activiteit. Je krijgt
   dan een mail; met één klik (*Enable workflow*) loopt hij weer.
-- De menu-ophaler leest de HTML van de Posthoorn-site. Verandert die site van opbouw, dan faalt
-  de Action (bewust: bij minder dan 50 producten blijft het oude menu staan) en krijg je een mail.
+- Verandert de site van De Posthoorn van opbouw, dan valt de pagina terug op `menu.json` en faalt
+  de Action (bewust: bij minder dan 50 producten blijft het oude menu staan); je krijgt een mail.
+  Haalt De Posthoorn de CORS-header weg, dan valt de pagina ook terug (te zien in de console).
 - Productopties (extra saus, groot/klein) staan niet als keuze in het menu; dat gaat via het
   opmerkingenveld per regel.

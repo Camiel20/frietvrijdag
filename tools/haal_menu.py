@@ -7,6 +7,9 @@ met daarin js-product-card-name en js-product-card-price.
 
 Gebruik:  python tools/haal_menu.py [uitvoerbestand]
 Faalt (exit 1) bij te weinig producten; het oude menu blijft dan staan.
+
+De site leest het menu live met docs/js/menu.js, dezelfde regels in JavaScript; menu.json is
+de reserve. Wijzig je hier iets, wijzig het daar ook (tests/menu.test.js vergelijkt ze).
 """
 import html
 import json

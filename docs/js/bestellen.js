@@ -415,7 +415,9 @@ function menuSectie() {
   sec.replaceChildren(el('section', { class: 'panel' }, el('h2', {}, t('Wat wil je?', 'What would you like?')),
     EN ? el('p', { class: 'muted klein' }, 'The menu is in Dutch, just like on the De Posthoorn website.') : null,
     zoek, chips, lijsten,
-    el('p', { class: 'muted klein' }, t(`Menu en prijzen van de website van De Posthoorn, bijgewerkt ${bijgewerkt}.`, `Menu and prices from the De Posthoorn website, updated ${bijgewerkt}.`))));
+    el('p', { class: 'muted klein' }, menu.live
+      ? t('Menu en prijzen live van de website van De Posthoorn.', 'Menu and prices live from the De Posthoorn website.')
+      : t(`Menu en prijzen van de website van De Posthoorn, bijgewerkt ${bijgewerkt}.`, `Menu and prices from the De Posthoorn website, updated ${bijgewerkt}.`))));
 }
 
 function filter() {

@@ -22,7 +22,9 @@ collega's (telefoon) is `docs/uitleg.html`.
   Firebase-console plakken** (Firestore → Rules → Publish); er is geen deploy-pipeline voor regels.
 - Beheerder = Google-login + document `beheer/{uid}` (alleen via de console aan te maken).
   Collega's = anonieme login, gekoppeld via `koppelingen/{uid}` aan hun token.
-- Menu: `tools/haal_menu.py` → `docs/menu.json`, nachtelijk via `.github/workflows/menu.yml`.
+- Menu: de pagina haalt het live van De Posthoorn (`docs/js/menu.js`, CORS staat open) en valt terug
+  op `docs/menu.json` (`tools/haal_menu.py`, nachtelijk via `.github/workflows/menu.yml`; GitHub draait
+  die vaak uren te laat). JS en Python lezen gelijk; `tests/menu.test.js` vergelijkt ze.
 
 ## Ontwikkelen
 - Geen buildstap; ES-modules + Firebase SDK 10.14.1 van gstatic.

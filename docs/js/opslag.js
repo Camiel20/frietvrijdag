@@ -6,6 +6,7 @@
 // naam (deelnemers/{id}) en bestelling (bestellingen/{id}), nooit elkaars token.
 import { firebaseConfig } from './firebase-config.js';
 import { draaienVanaf } from './datum.js';
+import { BRON, menuUitPagina } from './menu.js';
 
 const FB = 'https://www.gstatic.com/firebasejs/10.14.1/';
 export const DEMO = !firebaseConfig.apiKey;
@@ -209,10 +210,27 @@ export const opslag = DEMO ? demo() : await firestore();
 
 // --------------------------------------------------------------------------- hulpjes
 
+/**
+ * Het menu van dit moment, rechtstreeks van de site van De Posthoorn (die staat dat toe: CORS *).
+ * Lukt dat niet binnen 6 seconden, of ziet het er niet betrouwbaar uit, dan menu.json uit de repo
+ * (de nachtelijke Action houdt die bij). Een live menu heeft `live: true`.
+ */
 export async function laadMenu() {
-  const r = await fetch('menu.json', { cache: 'no-cache' });
-  if (!r.ok) throw new Error('menu.json niet gevonden');
-  return r.json();
+  const reserve = fetch('menu.json', { cache: 'no-cache' }).then((r) => {
+    if (!r.ok) throw new Error('menu.json niet gevonden');
+    return r.json();
+  });
+  reserve.catch(() => {}); // alleen gebruikt als live mislukt
+  try {
+    const r = await fetch(BRON, { cache: 'no-cache', signal: AbortSignal.timeout(6000) });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const menu = menuUitPagina(await r.text());
+    if (!menu) throw new Error('te weinig producten');
+    return { ...menu, live: true, bijgewerkt: new Date().toISOString() };
+  } catch (e) {
+    console.warn('Menu live ophalen lukte niet, menu.json gebruikt:', e.message);
+    return reserve;
+  }
 }
 
 /** Link die een collega krijgt. De token staat achter # zodat hij niet in serverlogs komt. taal 'en' = Engelse pagina. */
